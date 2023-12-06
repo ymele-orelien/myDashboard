@@ -10,7 +10,9 @@ use App\Models\Demande;
 
 use App\Models\Message;
 use App\Models\Evenements;
+
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens as b;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -20,7 +22,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,SoftDeletes;
+    use b, HasFactory, Notifiable,SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -32,47 +34,20 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'status',
+"role",
         'location',
-        'pictures',
-        'descriptions',
-        'phone'
+        'image',
+        'description',
+        'type'
     ];
+/**
+ * ONE TO ONE FOR RELATION ONE TO MANY
+ */
 
-
-    /////relation one to one polymorhs
-
-
-
-//     public function usersable():MorphTo{
-// return $this->morphTo();
-//     }
-
-
-    /////relation one to many form table donates
-    public function donates()
+    public function events()
     {
-        return $this->hasMany(Donate::class);
+        return $this->hasMany(Evenements::class);
     }
-      /////relation one to many form table Posts
-      public function posts()
-      {
-          return $this->hasMany(Post::class);
-      }
-        /////relation one to many form table messages
-        public function messages()
-        {
-            return $this->hasMany(Message::class);
-        }
-            /////relation one to many form table messages
-            public function demandes()
-            {
-                return $this->hasMany(Demande::class);
-            }
-            public function evenements()
-            {
-                return $this->hasMany(Evenements::class);
-            }
 
 
     /**

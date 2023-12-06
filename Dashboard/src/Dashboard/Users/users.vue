@@ -9,7 +9,7 @@
             </ol>
         </nav>
     </div>
-    <div class="card-header">
+    <div class="card p-2">
         <h4><i class="fa-solid fa-users"></i> Utilisateurs
 
             <RouterLink to="/users/activites" class="btn  float-end m-2" style="background-color: #00002E;color: #fff;">
@@ -21,7 +21,7 @@
 
         <div class="card-body">
             <div class="dataTable-search m-2"><input class="dataTable-input" placeholder="Search..." type="text"></div>
-            <table class="table table-striped">
+            <table class="table table-striped" border="1">
                 <thead>
                     <tr>
                         <th scope="col">#</th>

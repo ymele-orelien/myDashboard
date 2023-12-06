@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\simpleUsers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -20,16 +21,17 @@ class Donate extends Model
         'bloodGroup',
         'poches'
             ];
-            public function user()
+            ///RELATION ONE TO ONE
+            public function SimpleUser()
             {
-                return $this->belongsTo(User::class);
+                return $this->belongsTo(simpleUsers::class);
             }
-             /////releation polymorhs one to one
 
-            /////relation one to many from Users
-            public function donateable():MorhpMany{
-                return $this->morphTo();
-            }
+
+            // /////relation one to many from Users
+            // public function donateable():MorhpMany{
+            //     return $this->morphTo();
+            // }
 
 
 }

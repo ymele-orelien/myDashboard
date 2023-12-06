@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\parteners;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,15 +14,15 @@ class Evenements extends Model
     use HasFactory,SoftDeletes;
     protected $fillable=[
         'id',
-        'user_id',
+
         'started',
         'theme',
         'detail',
-        'picture',
+
 
     ];
-    public function parteners():MorphOne{
-        return $this->morphone(parteners::class,'partenersable');
-
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\simpleUsers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
@@ -18,8 +19,8 @@ class Demande extends Model
         'bloodGroup',
         'poches'
     ];
-    public function users():MorphOne{
-        return $this->morphone(User::class,'usersable');
-
+    public function simpleUser()
+    {
+        return $this->belongsTo(simpleUsers::class);
     }
 }

@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('donates', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('simpleUser_id');
             $table->string('detail')->nullable();
             $table->enum("bloodGroup", ["A+", "A-","B+" ,"B-","AB+","AB-","O+","O-"])->nullable();
             $table->integer('poches')->nullable();
-            $table->float('montant')->nullable();
 
-$table->foreign('user_id')->references('id')->on('users')
+
+$table->foreign('simpleUser_id')->references('id')->on('simple_users')
         ->onDelete('cascade');
 
             $table->softDeletes();

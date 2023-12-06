@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('parteners', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->enum("type", ["hospital", "ong","state" ,"other"]);
-        
+           
+            $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
         });

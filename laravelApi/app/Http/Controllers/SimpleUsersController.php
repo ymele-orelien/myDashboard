@@ -3,11 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Donate;
+use App\Models\Demande;
+use App\Models\Picture;
 use App\Models\simpleUsers;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\simpleUsersRequest;
 use Illuminate\Support\Facades\Validator;
+
 
 
 class SimpleUsersController extends Controller
@@ -45,12 +55,12 @@ class SimpleUsersController extends Controller
 
     {
         $simple = simpleUsers::with(['users'])->orderBy('created_at',"DESC")->paginate(15);
-        $users=User::all();
+       
 
     }
 
 
-    public function register( Request $request){
+    public function register( simpleUsersRequest $request){
         try{
              //validation
             $validation=Validator::make($request->all(),[
@@ -61,36 +71,29 @@ class SimpleUsersController extends Controller
             'gender'=>'required|max:191',
                 'bloodGroup'=>"required|max:3",
                 'dateBirth'=>"required|max:191",
+
             ]);
+//image
+$image=Str::random(32)."".$request->image->getClientOriginalExtension();
+
+
+            //enregistrement des donnee
             $simple=new simpleUsers([
                 'name'=>$request->name,
                 'email'=>$request->email,
-                'password'=>$request->password,
+                'password'=>Hash::make( $request->password),
                 'gender'=>$request->gender,
                 'bloodGroup'=>$request->bloodGroup,
                 'dateBirth'=>$request->dateBirth,
+
+
             ]);
-            $simple->save();
 
-            ///********relation one to one polymorhs*****\\\\\\\\
-            //****************************************\
-            // $users=new User([
-            //     'name'=>$request->name,
-            //     'email'=>$request->email,
-            //     'password'=>$request->password,
-            //     'status'=>$request->status,
-            //     'location'=>$request->location,
-            //     'pictures'=>$request->pictures,
-            //     'descriptions'=>$request->descriptions,
-            //     'phone'=>$request->phone,
 
-            // ]);
-
-            ///////////verification par LE JSON\\\\\\\\\\\\\\\\\\
-            // $simple->users()->save($users);
+$simple->save();
             return response()->json([
-                'status'=>422,
-                'message'=>'etudiant cree avec success',
+                'status'=>200,
+                'message'=>'Votre compte abien etait cree',
                 "simpleUsers"=> $simple
 
             ],200);
@@ -108,17 +111,12 @@ class SimpleUsersController extends Controller
 
     }
 
-
-
-
-    /////////////////
-
     public function edit(string $id){
         $simple=simpleUsers::find($id);
 
         return response()->json([
             'status'=>1,
-            "message"=>"utilisarteursa trouve",
+            "message"=>"Utilisateur trouve",
             "simpleUsers"=>$simple
 
         ],200);
@@ -128,30 +126,45 @@ class SimpleUsersController extends Controller
 
     public function update(Request $request, string $id){
         try{
+            //validation
+            $validation=Validator::make($request->all(),[
+                'name'=>'required|max:191',
+                'email'=>"required|unique|max:191",
+
+                // 'gender'=>'required|max:191',
+                    'bloodGroup'=>"required|max:3",
+                    'dateBirth'=>"required|max:191",
+                ]);
              //recuperation et modification des informations liees aux simpleUsers
 $simple=simpleUsers::where( 'id',$id)->exists();
 if($simple){
     $data=simpleUsers::find($id);
     $data->name=$request->name;
     $data->email=$request->email;
-    $data->password=$request->password;
-$data->gender=$request->gender;
+    // $data->password=$request->password;
+// $data->gender=$request->gender;
 $data->bloodGroup=$request->bloodGroup;
 $data->dateBirth=$request->dateBirth;
+
 $data->update();
 
 }
 
 //affichage aux format Json
 return response()->json([
-    'status'=>1,
+    'status'=>200,
     "message"=>" Modification effectuer avec success",
     "simpleUsers"=>$data
 
 ],200);
         }
         catch(Exeception $exception){
+            return response()->json([
+                'status'=>500,
+                "message"=>$exception,
 
+
+            ],500);
         }
 
     }
@@ -167,13 +180,41 @@ return response()->json([
             return response()->json([
                 'status'=>1,
                 "message"=>" suppression reussir",
-                "simpleUsers"=>$data
+
 
             ],200);
         } else {
+            return response()->json([
+                'status'=>1,
+                "message"=>" suppression echouer",
 
-            return back();
+
+            ],200);
         }
     }
+    public function create_demande($id){
+
+$simple=simpleUser::find($id);
+$dmd= new Demande([
+    'motif'=>$request->motif,
+    'bloodGroup'=>$request->bloodGroup,
+    'poches'=>$request->poche
+
+]);
+$simple = $simple->demandes()->save($dmd);
+    }
+
+    public function create_donate(Request $request, $id){
+
+        $simple=simpleUser::find($id);
+        $donate= new Donate([
+            'simpleUser_id'=>$request->simpleUser_id,
+            'detail'=>$request->detail,
+            'bloodGroup'=>$request->bloodGroup,
+            'poches'=>$request->poches
+
+        ]);
+        $simple = $simple->donates()->save($donate);
+            }
 
 }

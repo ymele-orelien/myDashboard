@@ -70,7 +70,7 @@
                         </div>
                         <div class="row">
                            <div class="col-lg-3 col-md-4 label">Date de creation de compte</div>
-                           <div class="col-lg-9 col-md-8">{{simpleUsers.created_at}}</div>
+                           <div class="col-lg-9 col-md-8">{{ simpleUsers.created_at }}</div>
                         </div>
 
                      </div>
@@ -89,7 +89,7 @@
                            <div class="row mb-3">
                               <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Nom D'utilisateur</label>
                               <div class="col-md-8 col-lg-9"> <input name="fullName" type="text" class="form-control"
-                                    id="fullName" v-model="simpleUsers.name"></div>
+                                    id="fullName" v-model="name"></div>
                            </div>
                            <div class="row mb-3">
                               <label for="about" class="col-md-4 col-lg-3 col-form-label">A Propos</label>
@@ -100,25 +100,26 @@
                            <div class="row mb-3">
                               <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                               <div class="col-md-8 col-lg-9"> <input name="email" type="email" class="form-control"
-                                    id="Email" v-model="simpleUsers.email"></div>
+                                    id="Email" v-model="email"></div>
                            </div>
                            <div class="row mb-3">
                               <label for="Job" class="col-md-4 col-lg-3 col-form-label">groupe sanguin</label>
                               <div class="col-md-8 col-lg-9"> <input name="job" type="text" class="form-control" id="Job"
-                                    v-model="simpleUsers.bloodGroup"></div>
+                                    v-model="bloodGroup"></div>
                            </div>
 
                            <div class="row mb-3">
                               <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
                               <div class="col-md-8 col-lg-9"> <input name="address" type="text" class="form-control"
-                                    id="Address" v-model="simpleUsers.location"></div>
+                                    id="Address" v-model="location"></div>
                            </div>
                            <div class="row mb-3">
                               <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Numero De Telephone</label>
                               <div class="col-md-8 col-lg-9"> <input name="phone" type="text" class="form-control"
                                     id="Phone" value="(436) 486-3538 x29071"></div>
                            </div>
-                           <button class="from-control btn btn-success " @click="updateUsers()" type="button">Modifier</button>
+                           <button class="from-control btn btn-success " @click="updateUsers"
+                              type="button">Modifier</button>
 
                         </form>
                      </div>
@@ -186,25 +187,23 @@ export default {
       return {
          errolist: '',
          simpleUsers: {
-         
-               name: '',
-               email: '',
-               bloodGroup: '',
-               location: ''
-         
-
-         }
-
+         },
+         name: '',
+         email: '',
+         bloodGroup: '',
+         location: ''
       }
    },
    mounted() {
       this.getUsers();
+      this.updateUsers()
 
 
    },
 
 
    methods: {
+
 
       getUsers() {
 
@@ -213,7 +212,7 @@ export default {
 
             this.simpleUsers = response.data.simpleUsers
 
-            
+
          })
             .catch(error => {
                console.log('erreur:', error)
@@ -221,26 +220,39 @@ export default {
 
       },
       updateUsers() {
-         var mythis = this;
-         axios.put(`http://127.0.0.1:8000/api/update-simpleUsers`,this.simpleUsers).then(res => {
-       console.log(res.data);
-       alert(res.data.message);
-       this.simpleUsers={
-         name: '',
-               email: '',
-               bloodGroup: '',
-               location: ''
-       }
-       this.errolist=''
-         }).catch(
-            error => {
-               console.error('erreur lors de la modification')
-            });
+         const updatedUsers = {
+            name: this.name,
+            email: this.email,
+            bloodGroup: this.bloodGroup,
+            location: this.location,
+         };
+         axios.put(`http://127.0.0.1:8000/api/update-simpleUsers/${this.id}`, updatedUsers,
+            {
+               headers: {
+                  'Content-Type': 'application/json'
+               }
+            }).then(res => {
+               console.log(res.data.message);
+             
+               this.simpleUsers = {
+                  name: '',
+                  email: '',
+                  bloodGroup: '',
+                  location: ''
+               }
+               alert(res.data.message);
+               this.errolist = ''
+            }).catch(
+               error => {
+                  console.log(error);
+               });
       }
+
    }
 
 
 
 
-}</script>
+}
+</script>
 <style></style>

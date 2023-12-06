@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Donate;
+use App\Models\Demande;
+use App\Models\Picture;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
@@ -15,13 +18,19 @@ class simpleUsers extends Model
         'id',
         'name',
 'email',
+'picture',
 'password',
+'image',
         'gender',
         'bloodGroup',
         'dateBirth',
     ];
-    // public function users():MorphOne
-    // {
-    //     return $this->morphone(User::class,'usersable');
-    // }
+    public function demandes()
+    {
+        return $this->hasMany(Demande::class);
+    }
+    public function donates()
+    {
+        return $this->hasMany(Donate::class);
+    }
 }

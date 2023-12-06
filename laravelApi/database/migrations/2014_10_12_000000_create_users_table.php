@@ -17,12 +17,10 @@ return new class extends Migration
             $table->string('email',255)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            // $table->string('status')->nullable();
-            // $table->string('location')->nullable();
-            // $table->string('pictures')->nullable();
-            // $table->longText('descriptions')->nullable();
-            // $table->string('phone')->nullable();
-            $table->morphs("usersable");
+            $table->string("location")->nullable();
+            $table->string("image")->nullable();
+            $table->string("description")->nullable();
+            $table->enum("role",["ADMIN","SECRETAIRE","HOSPITAL","ONG"]);
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();

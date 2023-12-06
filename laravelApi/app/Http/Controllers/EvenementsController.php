@@ -29,38 +29,23 @@ class EvenementsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function create_event(Request $request,styring $id)
+    public function create_event(Request $request)
     {
         try{
 
-            $data = new Evenements();
-            $array = [
-                "user_id" => $request->user_id,
-                "theme" => $request->theme,
-                "started"=> $request->started,
-                "picture"=> $request->picture,
 
 
+            $events->save();
 
-
-            ];
-            $data->create($array);
-
-        return response()->json([
-            'status'=>1,
-            "message"=>"eveenemets creer",
-            "data"=>$array
-
-        ],200);
 
         }
         catch(Exeception $exception){
             return response()->json([
-                'status'=>1,
+                'status'=>401,
                 "message"=>"evenements non enregistrer",
 
 
-            ],200);
+            ],401);
 
         }
     }
