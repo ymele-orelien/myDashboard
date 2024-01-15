@@ -9,7 +9,7 @@
             </ol>
         </nav>
     </div>
-    <div class="card-header">
+    <div class="card p-2">
         <h4><i class="fa-solid fa-hospital"></i> Hopitaux</h4>
         <div class="card-body">
             <div class="dataTable-search m-2"><input class="dataTable-input" placeholder="Search..." type="text"></div>
@@ -18,8 +18,8 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Nom du centre</th>
-                        <th scope="col">adresse</th>
-                        <th scope="col">email</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Localisation</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>

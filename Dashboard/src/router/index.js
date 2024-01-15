@@ -3,23 +3,39 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import dashboard from '../Dashboard/Master/Dashboard.vue';
 import accuiel from '../Dashboard/Master/home.vue';
-import users from '../Dashboard/Users/users.vue'
-import users_details from '../Dashboard/Users/details-users.vue'
-import users_activites from '../Dashboard/Users/users-activites.vue'
-import create_users from "../Dashboard/Users/create-admin.vue"
-import list_admin from "../Dashboard/Users/list-admin.vue"
-import details_admin from "../Dashboard/Users/details-admin.vue"
-
-import evenements from "../Dashboard/Evenements/Evenements.vue"
-import connexion from "../Form-connexion/connexion.vue"
+import users from '../Dashboard/Users/users.vue';
+import allUserActivity from '../Dashboard/Users/all-activity-user.vue';
+import users_details from '../Dashboard/Users/details-users.vue';
+import users_activites from '../Dashboard/Users/users-activites.vue';
+import create_users from "../Dashboard/Users/create-admin.vue";
+import list_admin from "../Dashboard/Users/list-admin.vue";
+import details_admin from "../Dashboard/Users/details-admin.vue";
+import list_hospitaux from "../Dashboard/Hopitaux/Hopitaux.vue";
+import stocke_hospitaux from "../Dashboard/Hopitaux/stockeHospitaux.vue";
+import evenements from "../Dashboard/Evenements/Evenements.vue";
+import connexion from "../Form-connexion/connexion.vue";
+import eventCreate from "../Dashboard/Evenements/eventCreate.vue"
 
 const routes = [
+    {
+        name: "connexion",
+        path: "/",
+        component: connexion,
+        // meta: {guest: true}
+    },
     {
         name: 'Dashboard',
         path: '/accuiel',
         component: dashboard,
-        children: [
-
+        meta: {requiresAuth: true},
+        children:
+         [ {
+            name: "local",
+            path: "/home",
+            component: accuiel,
+            
+        },
+//===========>USERS<==================\\
             {
                 name: 'usersList',
                 path: '/users',
@@ -27,18 +43,20 @@ const routes = [
 
             },
             {
-                name: "local",
-                path: "/home",
-                component: accuiel
+                name: 'allUserActivity',
+                path: '/allUserActivity',
+                component: allUserActivity
+
             },
+           
 
             {
-                path: '/users_details/:id/details',
-                name: '/users_details',
-                component: users_details,
-                props: true
-
-            },
+                path: '/users_details/:id/details', 
+                    name: "connnexion",
+                    path: "/",
+                    component: connexion,
+                    meta: {guest: true}
+                },
             {
                 name: 'list_admin',
                 path: '/users/list_admin',
@@ -64,50 +82,80 @@ const routes = [
                 path: '/users/activites',
                 component: users_activites
 
-            }, {
+            },
+            //===========>EVENTS<==================\\ 
+            {
                 name: 'Evenements',
                 path: '/evenements',
                 component: evenements
 
+            },
+            {
+                name: 'eventCreate',
+                path: '/eventCreate',
+                component: eventCreate
+
             }
+            ,
+            //===========>HOSPITALS<==================\\ 
+
+             {
+                name: 'list_hospitaux',
+                path: '/listHospitaux',
+                component:  list_hospitaux
+
+            }
+            , {
+                name: 'stocke_hospitaux',
+                path: '/stockeHospitaux',
+                component:  stocke_hospitaux
+
+            }
+
 
 
         ]
 
 
-    }, {
-        name: "connnexion",
-        path: "/",
-        component: connexion
-    }
+    }, 
+    
 
 
 ];
 
 const router = Router();
+
+function loggedIn(){
+    return localStorage.getItem('token')
+}
+
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-      if (!localStorage.getItem('token')) {
-        // Si l'utilisateur n'est pas authentifié, redirigez-le vers la page de connexion
-        next({ path: '/' });
-      } else {
-        // Vérifiez si le token est valide côté serveur (facultatif mais recommandé)
-        axios.get('http://127.0.0.1:8000/api/users')
-          .then(response => {
-            // Si l'utilisateur est authentifié, continuez la navigation
-            next();
-          })
-          .catch(error => {
-            // Si le token est invalide, redirigez l'utilisateur vers la page de connexion
-            console.error('Token invalide', error);
-            next({ path: '/' });
-          });
-      }
+        // this route requires auth, check if logged in
+        // if not, redirect to login page.
+        if (!loggedIn()) {
+            next({
+            path: '/',
+            query: { redirect: to.fullPath }
+            })
+        } else {
+            next()
+        }
+    } else if(to.matched.some(record => record.meta.guest)) {
+        if (loggedIn()) {
+            next({
+            path: '/home',
+            query: { redirect: to.fullPath }
+            })
+        } else {
+            next()
+        }
     } else {
-      // Si la route ne nécessite pas d'authentification, continuez la navigation
-      next();
+        next() // make sure to always call next()!
     }
-  });
+})
+
+
 export default router;
 function Router() {
     const router = new createRouter({

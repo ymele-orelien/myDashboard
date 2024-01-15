@@ -9,10 +9,10 @@
             </ol>
         </nav>
     </div>
-    <div class="card p-2">
+    <div class="card-header">
         <h4><i class="fa-solid fa-users"></i> Utilisateurs
 
-            <RouterLink to="/users/activites" class="btn  float-end m-2" style="background-color: #00002E;color: #fff;">
+            <RouterLink to="allUserActivity" class="btn  float-end m-2" style="background-color: #00002E;color: #fff;">
                 voir les activites
             </RouterLink>
 
@@ -21,7 +21,7 @@
 
         <div class="card-body">
             <div class="dataTable-search m-2"><input class="dataTable-input" placeholder="Search..." type="text"></div>
-            <table class="table table-striped" border="1">
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -75,6 +75,7 @@ export default {
     data() {
         return {
             simpleUsers: [],
+            token: localStorage.getItem('token')
         }
     },
     mounted() {
@@ -84,8 +85,15 @@ export default {
     methods: {
 
         getUsers() {
+            console.log(this.token)
+            axios.get('http://127.0.0.1:8000/api/index-simpleUsers', {
+                headers: {
+                  
 
-            axios.get('http://127.0.0.1:8000/api/index-simpleUsers').then(res => {
+                    Authorization: 'Bearer ' + this.token,
+                }
+}).then(res => {
+                console.log(this.token)
                 console.log(res);
                 this.simpleUsers = res.data.simpleUsers
                 console.log(this.simpleUsers)

@@ -1,6 +1,6 @@
 <template>
-     <div class="pagetitle">
-        <h1>Simple utilisateurs</h1>
+    <div class="pagetitle">
+        <h1>Utilisateurs</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html">Accuiel</a></li>
@@ -9,131 +9,223 @@
             </ol>
         </nav>
     </div>
-   
-    <div class="card" style="background: none !important;">
-        <h4 class="m-9">Recent activites</h4>
-        <ul class="accordion">
-        <li>
-            <input type="radio" name="accordion" id="first" checked>
-            <label for="first" class="first">Ymele orelien <br>
-               </label>
+    <section class="section dashboard">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="row">
 
-            <div class="content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam in quibusdam sed dicta
-                    aspernatur, aliquid vero perferendis natus tenetur repudiandae!</p>
+
+
+
+                    <div class="col-12">
+                        <div class="card recent-sales overflow-auto">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li class="dropdown-header text-start">
+                                        <h6>Filter</h6>
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Today</a></li>
+                                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Activites Simple utilisateurs<span>| <router-link to="/allUserActivity"><a href="">Voir plus</a>
+                                            tout</router-link></span></h5>
+                                <table class="table table-borderless datatable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Nom d'utilisateur</th>
+                                            <th scope="col">Operation</th>
+                                            <th scope="col">Date & Heure</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row"><a href="#">1</a></th>
+                                            <td>Ymele orelien</td>
+                                            <td><a href="#" class="text-primary">c'est t'incrire</a></td>
+                                            <td>10/12/2023 a 14h30</td>
+                                            <td>
+                                                <RouterLink to="/allUserActivity" class=" btn btn-primary m-1"
+                                                    style="color: #fff;"><i class="bi bi-info-circle"></i></RouterLink>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><a href="#">2</a></th>
+                                            <td>Bridie Kessler</td>
+                                            <td><a href="#" class="text-primary">Demande de don de sang</a></td>
+                                            <td>13/12/2023 a 14h10</td>
+                                            <td>
+                                                <RouterLink to="/allUserActivity" class=" btn btn-primary m-1"
+                                                    style="color: #fff;"><i class="bi bi-info-circle"></i></RouterLink>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><a href="#">3</a></th>
+                                            <td>Ashleigh Langosh</td>
+                                            <td><a href="#" class="text-primary">Don de sang </a></td>
+                                            <td>30/11/ 2023</td>
+                                            <td>
+                                                <RouterLink to="/allUserActivity" class=" btn btn-primary m-1"
+                                                    style="color: #fff;"><i class="bi bi-info-circle"></i></RouterLink>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><a href="#">4</a></th>
+                                            <td>Angus Grady</td>
+                                            <td><a href="#" class="text-primar">C'est inscrire</a></td>
+                                            <td>29/11/2023</td>
+                                    <td>
+                                                <RouterLink to="/allUserActivity" class=" btn btn-primary m-1"
+                                                    style="color: #fff;"><i class="bi bi-info-circle"></i></RouterLink>
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card top-selling overflow-auto">
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li class="dropdown-header text-start">
+                                        <h6>Filter</h6>
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Today</a></li>
+                                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                                </ul>
+                            </div>
+                            <div class="card-body pb-0">
+                                <h5 class="card-title">Centres hospitaliers <span>| <router-link to="">Voir
+                                            tout</router-link></span></h5>
+                                <table class="table table-borderless datatable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Nom du centre</th>
+                                            <th scope="col">Operation</th>
+                                            <th scope="col">date & heure</th>
+                                            <th>Action</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row"><a href="#">1</a></th>
+                                            <td>Hospital generale de deido</td>
+                                            <td><a href="#" class="text-primary">Valider une demande de don de sang</a></td>
+                                            <td>10/12/2023 a 14h30</td>
+                                            <td> <button class=" btn btn-primary "><i
+                                                        class="bi bi-info-circle"></i></button></td>
+
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><a href="#">2</a></th>
+                                            <td>Hospital laqintinie de Douala</td>
+                                            <td><a href="#" class="text-primary">Refuser une demande de don de sang</a></td>
+                                            <td>13/12/2023 a 14h10</td>
+
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><a href="#">3</a></th>
+                                            <td>Centre regional de Bafoussam</td>
+                                            <td><a href="#" class="text-primary">Soumit un nouveau evenement </a></td>
+                                            <td>30/11/ 2023 a 14h15</td>
+                                            <td> <button class=" btn btn-primary "><i
+                                                        class="bi bi-info-circle"></i></button></td>
+
+                                        </tr>
+                                        <tr>
+                                            <th scope="row"><a href="#">4</a></th>
+                                            <td>Centre la perceverence de douala</td>
+                                            <td><a href="#" class="text-primar"> a ete ajouter</a></td>
+                                            <td>29/11/2023 a 17 h30</td>
+                                            <td> <button class=" btn btn-primary "><i
+                                                        class="bi bi-info-circle"></i></button></td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div style="opacity: 80;font-size: 15px;"> <i class="fa-solid fa-stopwatch m-1" style="font-size: 15px;"></i>17min</div> 
-        </li>
-        <li>
-            <input type="radio" name="accordion" id="second">
-            <label for="second">Products</label>
-            <div class="content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam in quibusdam sed dicta
-                    aspernatur, aliquid vero perferendis natus tenetur repudiandae!</p>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="filter">
+                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <li class="dropdown-header text-start">
+                                <h6>Filter</h6>
+                            </li>
+                            <li><a class="dropdown-item" href="#">Today</a></li>
+                            <li><a class="dropdown-item" href="#">This Month</a></li>
+                            <li><a class="dropdown-item" href="#">This Year</a></li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Activites Administrateur <span>| <router-link to="">Voir
+                                    tout</router-link></span></h5>
+                        <div class="activity">
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">13:21 min</div>
+                                <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
+                                <div class="activity-content"> Don de sang par <a href="#" class="fw-bold text-dark">Ymel
+                                        orelien</a> </div>
+                            </div>
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">17:56 min</div>
+                                <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
+                                <div class="activity-content"> Don financier de 13000FCFA par yoyo cree</div>
+                            </div>
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">15:25 min</div>
+                                <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
+                                <div class="activity-content"> Voluptates corrupti molestias voluptatem</div>
+                            </div>
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">01:25 min</div>
+                                <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
+                                <div class="activity-content"> Tempore autem saepe <a href="#"
+                                        class="fw-bold text-dark">occaecati voluptatem</a> tempore</div>
+                            </div>
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">2 days</div>
+                                <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
+                                <div class="activity-content"> Est sit eum reiciendis exercitationem</div>
+                            </div>
+                            <div class="activity-item d-flex">
+                                <div class="activite-label">4 weeks</div>
+                                <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
+                                <div class="activity-content"> Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
             </div>
-            <div style="opacity: 80;font-size: 15px;"> <i class="fa-solid fa-stopwatch m-1" style="font-size: 15px;"></i>17min</div> 
-        </li>
-        <li>
-            <input type="radio" name="accordion" id="third">
-            <label for="third">Products</label>
-            <div class="content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam in quibusdam sed dicta
-                    aspernatur, aliquid vero perferendis natus tenetur repudiandae!</p>
-            </div>
-            <div style="opacity: 80;font-size: 15px;"> <i class="fa-solid fa-stopwatch m-1" style="font-size: 15px;"></i>17min</div> 
-        </li>
-        <li>
-            <input type="radio" name="accordion" id="fourth">
-            <label for="fourth">Products</label>
-            <div class="content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam in quibusdam sed dicta
-                    aspernatur, aliquid vero perferendis natus tenetur repudiandae!</p>
-            </div>
-            <div style="opacity: 80;font-size: 15px;"> <i class="fa-solid fa-stopwatch m-1" style="font-size: 15px;"></i>17min</div> 
-        </li>
-        <li>
-            <input type="radio" name="accordion" id="five">
-            <label for="five">Products</label>
-            <div class="content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam in quibusdam sed dicta
-                    aspernatur, aliquid vero perferendis natus tenetur repudiandae!</p>
-            </div>
-            <div style="opacity: 80;font-size: 15px;"> <i class="fa-solid fa-stopwatch m-1" style="font-size: 15px;"></i>17min</div> 
-        </li>
-        <li>
-            <input type="radio" name="accordion" id="six">
-            <label for="six">Products</label>
-            <div class="content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam in quibusdam sed dicta
-                    aspernatur, aliquid vero perferendis natus tenetur repudiandae!</p>
-            </div>
-            <div style="opacity: 80;font-size: 15px;"> <i class="fa-solid fa-stopwatch m-1" style="font-size: 15px;"></i>17min</div> 
-        </li>
-    </ul>
-                     <div class="card-body">
-                        <h5 class="card-title">Basic Pagination</h5>
-                        <nav aria-label="Page navigation example">
-                           <ul class="pagination">
-                              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                              <li class="page-item"><a class="page-link" href="#">1</a></li>
-                              <li class="page-item"><a class="page-link" href="#">2</a></li>
-                              <li class="page-item"><a class="page-link" href="#">3</a></li>
-                              <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                           </ul>
-                        </nav>
-                     </div>
-                  </div>
-</template>
+
+        </div>
+
+
+</section></template>
 <script>
 </script>
-<style>
-
-.accordion{
- 
-    max-width: 90% ;
-}
-.accordion li{
-    list-style: none;
-    width: 100%;
-    margin: 20px ;
-padding: 10px;
-border-radius: 8px;
-background: #e3edf7;
-box-shadow: 6px 6px 10px -1px rgba(0, 0, 0, 0.15),
--6px 6px 10px -1px rgba(255, 255, 255, 0.7);
-}
-.accordion li label{
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    font-size: 18px;
-    font-weight: 500;
-    cursor:pointer;
-}
-label::before{
-   content: "+";
-   margin-right: 10px;
-   font-size: 24px;
-   font-weight: 600;
-}input[type='radio']{
-display: none;
-}
-
-.accordion .content{
-    color:#555;
-    padding: 0 10px;
-    line-height: 26px;
-    max-height: 0;
-    transform: max-height 0.5s,padding 0.5s;
-    overflow: hidden;
-}
-.accordion input[type='radio']:checked +label + .content {
-    max-height: 400px;
-    padding: 10px 10px 20px;
-    transform: max-height 0.5s,padding 0.5s;
-}
-.accordion input[type="radio"]:checked + label:before{
-    content:'-'
-
-}
-</style>
+<style></style>

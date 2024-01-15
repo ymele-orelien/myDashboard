@@ -52,11 +52,11 @@
                 </a>
                 <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <RouterLink to="/hospitaux"> <i class="bi bi-circle"></i><span>Nos hospitaux</span> </RouterLink>
+                        <RouterLink to="/listHospitaux"> <i class="bi bi-circle"></i><span>Nos hospitaux</span> </RouterLink>
                     </li>
 
                     <li>
-                        <RouterLink to="/hospitaux/activites"> <i class="bi bi-circle"></i><span>stockes et activites</span>
+                        <RouterLink to="stockeHospitaux"> <i class="bi bi-circle"></i><span>stockes et activites</span>
                         </RouterLink>
                     </li>
 
@@ -80,7 +80,7 @@
                 </a></li>
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#"> <i
-                        class="fa-solid fa-hand-holding-droplet"></i><span>Don</span><i
+                        class="fa-solid fa-hand-holding-droplet"></i><span>Demande</span><i
                         class="bi bi-chevron-down ms-auto"></i> </a>
                 <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li> <a href="icons-bootstrap.html"> <i class="bi bi-circle"></i><span>Don de sang</span> </a></li>
@@ -101,7 +101,7 @@
                 <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>    <RouterLink to="/evenements"><i class="bi bi-circle"></i><span>Listes des evenements</span> </RouterLink>
                     </li>
-                    <li> <a href="charts-apexcharts.html"> <i class="bi bi-circle"></i><span>Creer un evenemenet</span> </a>
+                    <li> <RouterLink to="/eventCreate"> <i class="bi bi-circle"></i><span>Creer un evenemenet</span> </RouterLink>
                     </li>
                     
                 </ul>
