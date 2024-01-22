@@ -17,8 +17,8 @@
                 <li class="nav-item d-block d-lg-none"> <a class="nav-link nav-icon search-bar-toggle " href="#"> <i
                             class="bi bi-search"></i> </a></li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown"> <i class="bi bi-bell"
-                            style="color: #00002E;"></i> <span class="badge bg-danger badge-number">2</span> </a>
+                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown"> <i class="fa-solid fa-hand-holding-medical"
+                            style="color: #4b4b84;"></i> <span class="badge bg-danger badge-number">2</span> </a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
                         <li class="dropdown-header"> You have 4 new notifications <a href="#"><span
                                     class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a></li>
@@ -73,8 +73,8 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown"> <i class="bi bi-chat-left-text"
-                            style="color: #00002E;"></i>
+                    <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown"> <i class="fa-solid fa-calendar"
+                            style="color: #65659f;"></i>
                         <span class="badge bg-danger badge-number">3</span> </a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
                         <li class="dropdown-header"> You have 3 new messages <a href="#"><span

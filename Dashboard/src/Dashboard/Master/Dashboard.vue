@@ -52,7 +52,7 @@
                 </a>
                 <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <RouterLink to="/listHospitaux"> <i class="bi bi-circle"></i><span>Nos hospitaux</span> </RouterLink>
+                        <RouterLink to="/hospital"> <i class="bi bi-circle"></i><span>Nos hospitaux</span> </RouterLink>
                     </li>
 
                     <li>
@@ -83,7 +83,7 @@
                         class="fa-solid fa-hand-holding-droplet"></i><span>Demande</span><i
                         class="bi bi-chevron-down ms-auto"></i> </a>
                 <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li> <a href="icons-bootstrap.html"> <i class="bi bi-circle"></i><span>Don de sang</span> </a></li>
+                    <li> <RouterLink to="/don" href="icons-bootstrap.html"> <i class="bi bi-circle"></i><span>Don de sang</span> </RouterLink></li>
                     <li> <a href="icons-remix.html"> <i class="bi bi-circle"></i><span>Demande de Don</span> </a></li>
 
                 </ul>

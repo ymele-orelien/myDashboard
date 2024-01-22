@@ -5,18 +5,25 @@
             <ol class="breadcrumb">
 
                 <li class="breadcrumb-item">
-                    <RouterLink to="/evenement">Nos evenements</RouterLink>
+                    <RouterLink to="/home">Accuiel</RouterLink>
                 </li>
-                <li class="breadcrumb-item active">Ajouts des d'un evenements</li>
+                <li class="breadcrumb-item active">
+                    <RouterLink to="/evenements">Evenements
+                    </RouterLink>
+                </li>
+                <li class="breadcrumb-item active">Ajouts d'un evenements</li>
             </ol>
         </nav>
     </div>
     <div class="card">
         <div class="card-body">
             <h3 class="card-title"><strong>Procedure de creation d'un Evenement ou autres</strong></h3>
-            <p>Le formulaire ci dessous est le formulaire de creation d'un utilisateur,ses utilsateur auront acces aux
-                tableaux de bord.certains champ comme le
-                <code>Nom d'utilisateurs</code>,<code>l'email</code>,<code>Mot de passe</code>,<code>la localisation </code>
+            <p>Le formulaire ci dessous est le formulaire de creation d'un Evenement,alors il est important de respecter
+                certains disposition
+
+                <code>l'image</code> chaque evenement cree doit etre accompagne dune image
+                descriptifs,<code>theme</code>:Qui va permetre de situe les utilisateurs sur le but de
+                l'evenements,<code>la date de debut de l'evenement</code>:,<code>les details sur levenemets </code>
                 sont obligatoire. Try submitting the form below. Depending on your browser and OS, you’ll see a slightly
                 different style of feedback.
             </p>
@@ -67,11 +74,11 @@ export default {
     methods: {
         eventSave() {
             const formData = new FormData();
-        formData.append('started', this.event.started);
-        formData.append('theme', this.event.theme);
-        formData.append('detail', this.event.detail);
-        formData.append('image', this.event.image);
-            axios.post('http://localhost:8000/api/event/register', event, {}, {
+            formData.append('started', this.event.started);
+            formData.append('theme', this.event.theme);
+            formData.append('detail', this.event.detail);
+            formData.append('image', this.event.image);
+            axios.post('http://localhost:8000/api/event/register', this.event, {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "multipart/form-data",
@@ -80,6 +87,7 @@ export default {
             })
                 .then(response => {
                     console.log('Article ajouté avec succès:', response.data);
+                    this.$router.push('/evenements')
                     // Réinitialiser le formulaire
                     this.resetForm();
                 })
@@ -87,8 +95,8 @@ export default {
                     console.error('Erreur lors de l\'ajout de l\'article:', error);
                 });
         },
-        handleFileUpload(){
-            this.event.image=this.$refs.image.files[0]
+        handleFileUpload() {
+            this.event.image = this.$refs.image.files[0]
         }
     }
 
