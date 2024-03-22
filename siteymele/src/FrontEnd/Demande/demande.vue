@@ -59,7 +59,7 @@
                                         <label for="" class="form-label"> QUEL EST LE GROUPE SANGUIN DONC VOUS AVEZ BESOINS?
                                             <span>*</span></label>
                                         <div class="form-group">
-                                            <select name="" id="" class="form-control">
+                                            <select name="" id="" class="form-control" v-model="demande.bloodGroup"> 
                                                 <option value="" >SECTIONNEZ UN GROUPE SANGUIN</option>
                                                 <option value="A+">A+</option>
                                                 <option value="A-">A-</option>
