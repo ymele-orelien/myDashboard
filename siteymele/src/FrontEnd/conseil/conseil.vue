@@ -87,7 +87,7 @@
               <div class="col-md-10 mx-auto">
                 <div class="box">
                   <div class="img-box">
-                    <img src="../../assets/images/logos/userGray.jpeg" alt="">
+                    <img src="../../assets/images/noDonate.png" alt="">
 
                   </div>
                   <div class="detail-box">
@@ -132,6 +132,18 @@ export default {
     name: 'conseil',
 }
 </script>
-<style>.box p{
+<style scoped>.box p{
   color: #00002c !important;
+}
+.detail-box{
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0) !important;
+  box-shadow: 0px 0px 32px 0 rgba(0, 0, 0, 0.1) !important;
+}
+.img-box{
+  z-index: 999;
+
+  
 }</style>

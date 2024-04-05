@@ -34,13 +34,13 @@ import { RouterLink } from 'vue-router';
                                     <img src="../../assets/images/slideA.jpg" alt="#">
                                 </div>
                                 <!-- News Title -->
-                                <h1 class="news-title"><a href="news-single.html">YMELE METAGO ORELIEN</a></h1>
+                                <h1 class="news-title"><a href="news-single.html">{{ users.name }}</a></h1>
                                 <!-- Meta -->
                                 <div class="meta">
                                     <div class="meta-left">
                                         <span class="author"><a href="#"><i class="fa-regular fa-circle-user"
                                                     style="font-size: 30px;"></i> Compte cree le</a></span>
-                                        <span class="date"><i class="fa-regular fa-clock"></i>03 Feb 2019</span>
+                                        <span class="date"><i class="fa-regular fa-clock"></i>{{ users.created_at }}</span>
                                     </div>
                                     <div class="meta-right">
                                         <span class="comments"><a href="#"><i class="fa fa-hand-holding-droplet"></i>05
@@ -115,11 +115,13 @@ import { RouterLink } from 'vue-router';
                                                     class="fa-brands fa-facebook"></i><span>Facebook</span></a></li>
                                         <li class="twitter"><a href="#"><i
                                                     class="fa-brands fa-twitter"></i><span>Twitter</span></a></li>
-                                        <li class="google-plus"><a href="#"><i class="fa-brands fa-google-plus"></i></a></li>
+                                        <li class="google-plus"><a href="#"><i class="fa-brands fa-google-plus"></i></a>
+                                        </li>
                                         <li class="linkedin"><a href="#"><i class="fa-brands fa-linkedin"></i></a></li>
-                                        <li class="pinterest"><a href="#"><i class="fa-brands fa-pinterest"></i></a></li>
+                                        <li class="pinterest"><a href="#"><i class="fa-brands fa-pinterest"></i></a>
+                                        </li>
                                     </ul>
-                               
+
                                 </div>
                             </div>
                         </div>
@@ -137,18 +139,18 @@ import { RouterLink } from 'vue-router';
                             <!-- Single Post -->
                             <div class="single-post">
                                 <div class="image">
-                                    <i class="fa-regular fa-user"></i><strong>Ymele Orelien</strong>
+                                    <i class="fa-regular fa-user"></i><strong>{{ users.name }}</strong>
                                 </div>
                                 <div class="image">
-                                    <i class="fa-solid fa-droplet"></i><strong>A+</strong>
+                                    <i class="fa-solid fa-droplet"></i><strong>{{ users.bloodGroup }}</strong>
                                 </div>
                                 <div class="image">
-                                    <i class="fa-regular fa-at"></i><strong>Orelienymele@gmail.com</strong>
+                                    <i class="fa-regular fa-at"></i><strong>{{ users.email }}</strong>
                                 </div>
                                 <div class="image">
-                                    <i class="fa-solid fa-location-dot"></i><strong>douala</strong>
+                                    <i class="fa-solid fa-location-dot"></i><strong>{{ users.location }}</strong>
                                 </div>
-                                
+
                             </div>
                             <!-- End Single Post -->
 
@@ -160,15 +162,15 @@ import { RouterLink } from 'vue-router';
                             <h3 class="title">Modifier vos informations</h3>
                             <!-- Single Post -->
                             <div class="single-post">
-                                <div class="single-post">
+                                <form class="single-post" @submit.prevent="updateUsers()">
                                     <div class="image">
                                         <i class="fa-regular fa-user"></i><strong><input type="text"
                                                 class="form-control" style="width: 200px;height: 50px;"
-                                                placeholder="Ymele orelien"></strong>
+                                                v-model="users.name"></strong>
                                     </div>
                                     <div class="image">
                                         <i class="fa-solid fa-droplet"></i><strong><select name="" id=""
-                                                class="form-control " style="width: 200px;height: 50px;">
+                                                class="form-control " style="width: 200px;height: 50px;" v-model="users.bloodGroup">
                                                 <option value="">A+</option>
                                                 <option value="">A-</option>
                                                 <option value="">B+</option>
@@ -183,54 +185,145 @@ import { RouterLink } from 'vue-router';
                                     <div class="image">
                                         <i class="fa-solid fa-location-dot"></i><strong><input type="text"
                                                 class="form-control" placeholder="localisation"
-                                                style="width: 200px;height: 50px;"></strong>
+                                                style="width: 200px;height: 50px;" v-model="users.location"></strong>
                                     </div>
-<button type="submit" class="btn btn-success" style="background: green; margin: 0.2rem;"> Modifier</button>
+                                    <button type="submit" class="btn btn-success"
+                                        style="background: green; margin: 0.2rem;"> Modifier</button>
 
+                                </form>
+
+                            <!-- End Single Post -->
+                        </div>
+
+
+                    </div>
+
+                    <div class="single-widget recent-post">
+                        <h3 class="title">Changer Mot de passe</h3>
+                        <!-- Single Post -->
+                        <form class="single-post" @submit.prevent="changePassword()">
+                            <div class="single-post">
+                                <div class="image">
+                                    <i class="fa-solid fa-lock-open"></i><strong><input type="password" class="form-control" v-model="currentPassword"
+                                            style="width: 200px;height: 50px;"
+                                            placeholder="Mot de passe actuel"></strong>
                                 </div>
-                                
-                                <!-- End Single Post -->
+                                <div class="image">
+                                    <i class="fa-solid fa-unlock-keyhole"></i><strong><input type="password"
+                                            class="form-control" style="width: 200px;height: 50px;"
+                                            placeholder="Nouveau Mot passe" v-model="newPassword"></strong>
+                                </div>
+
+                                <div class="image">
+                                    <i class="fa-solid fa-unlock-keyhole"></i><strong><input type="password"
+                                            class="form-control" placeholder="Confirm Mot Passe"
+                                            style="width: 200px;height: 50px;" v-model="confirmPassword" ></strong>
+                                </div>
+                                <button type="submit" class="btn btn-success"
+                                    style="background: green; margin: 0.2rem;"> Modifier</button>
+
                             </div>
+                            <!-- End Single Post -->
+                        </form>
 
 
-                        </div>
-
-                        <div class="single-widget recent-post">
-                            <h3 class="title">Changer Mot de passe</h3>
-                            <!-- Single Post -->
-                            <form class="single-post">
-                                <div class="single-post">
-                                    <div class="image">
-                                        <i class="fa-solid fa-lock-open"></i><strong><input type="text"
-                                                class="form-control" style="width: 200px;height: 50px;"
-                                                placeholder="Mot de passe actuel"></strong>
-                                    </div>
-                                    <div class="image">
-                                        <i class="fa-solid fa-unlock-keyhole"></i><strong><input type="text"
-                                                class="form-control" style="width: 200px;height: 50px;"
-                                                placeholder="Nouveau Mot passe"></strong>
-                                    </div>
-
-                                    <div class="image">
-                                        <i class="fa-solid fa-unlock-keyhole"></i><strong><input type="text"
-                                                class="form-control" placeholder="Confirm Mot Passe"
-                                                style="width: 200px;height: 50px;"></strong>
-                                    </div>
-<button type="submit" class="btn btn-success" style="background: green; margin: 0.2rem;"> Modifier</button>
-
-                                </div>
-                                <!-- End Single Post -->
-                            </form>
-
-
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        </div>
     </section>
     <!--/ End Single News -->
 </template>
+<script>
+import axios from "axios";
+
+const PROFILE_URL = "http://127.0.0.1:8000/api/simpleUser/profile";
+const UPDATE_USER_URL = "http://127.0.0.1:8000/api/updateUser";
+const UPDATE_PASSWORD_URL = "http://127.0.0.1:8000/api/updatePasseword";
+
+export default {
+    name: "detailsUserConnect",
+    data() {
+        return {
+            users: {},
+            token: localStorage.getItem("token"),
+            currentPassword: "",
+            newPassword: "",
+            confirmPassword: ""
+        };
+    },
+    mounted() {
+        this.getUsers();
+    },
+    methods: {
+        getUsers() {
+            axios
+                .get(PROFILE_URL, {
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + this.token,
+                    },
+                })
+                .then((res) => {
+                    console.log(res);
+                    this.users = res.data.users;
+                })
+                .catch((error) => {
+                    console.error("Error fetching user profile:", error);
+                    // Gérez les erreurs ici (ex: afficher un message à l'utilisateur)
+                });
+        },
+        updateUsers() {
+            const updatedUser = {
+                name: this.users.name,
+                role: this.users.role,
+                location: this.users.location,
+                description: this.users.description
+            };
+
+            axios.put(UPDATE_USER_URL, updatedUser, {
+                headers: {
+                    Authorization: "Bearer " + this.token,
+                },
+            })
+                .then((res) => {
+                    console.log(res.data);
+                    this.$toast.success('Modification réussie');
+                })
+                .catch((error) => {
+                    console.error("Error updating user:", error);
+                    this.$toast.error('Échec de la modification');
+                });
+        },
+        changePassword() {
+            const requestData = {
+                current_password: this.currentPassword,
+                new_password: this.newPassword,
+                confirm_password: this.confirmPassword
+            };
+
+            axios.post(UPDATE_PASSWORD_URL, requestData, {
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + this.token,
+                },
+            })
+                .then((res) => {
+                    console.log(res);
+                    this.$toast.success('Modification du mot de passe réussie');
+                })
+                .catch((error) => {
+                    console.error("Error updating password:", error);
+                    this.$toast.error('Échec de la modification du mot de passe');
+                });
+        },
+    },
+};
+
+</script>
 <style scoped>
 p,
 h3 {

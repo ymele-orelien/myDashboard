@@ -1,6 +1,7 @@
 <template>
 <sliderHome /><!-- end slider section -->
     <scheckdule />
+    <funfact />
 
 
 
@@ -8,8 +9,6 @@
 
 
 
-    >
-    <funfact />
 
     <evenement></evenement>
    

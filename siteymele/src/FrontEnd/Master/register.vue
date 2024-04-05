@@ -1,58 +1,93 @@
 <template>
-
-    <!-- Affichage des alertes -->
-    <div v-if="successMessage" class="alert alert-success" role="alert">
-      {{ successMessage }}
-    </div>
-    <div v-if="errorMessage" class="alert alert-danger" role="alert">
-      {{ errorMessage }}
-    </div>
   <div class="bottle">
     <div class="forms-bottle">
       <div class="signin-signup">
         <!-- FORMULAIRE D INSCRIPTION -->
-        <form action="#" class="sign-in-form" @submit.prevent="register">
-          <!-- En cas d erreur de connexion affiche moi ces erreurs -->
-          <Error v-if="error" :error="error" />
+        <form @submit.prevent="register" class="sign-in-form">
+          <img src="../../assets/images/logos/logoheader.jpg" alt="" />
 
-          <h2 class="title" style="color: #00002c; font-weight: 600">
+          <h2 class="title" style="color: #00002c; font-weight: 600;">
             S'inscrire
           </h2>
-          <div class="input-field">
-            <i class="fas fa-user"></i>
-            <input type="text" placeholder="Nom && Prenom" name="name" v-model="users.name" required />
-          </div>
 
           <div class="input-field">
             <i class="fas fa-user"></i>
-            <input type="email" placeholder="Email" name="email" v-model="users.email" />
+            <input
+              type="text"
+              placeholder="Nom && Prenom"
+              name="name"
+              v-model="users.name"
+            />
           </div>
+          <span class="error-message">{{ fieldErrors.name }}</span>
+
+          <div class="input-field">
+            <i class="fas fa-user"></i>
+            <input
+              type="email"
+              placeholder="Email"
+              name="email"
+              v-model="users.email"
+            />
+          </div>
+          <span class="error-message">{{ fieldErrors.email }}</span>
 
           <div class="input-field">
             <i class="fas fa-lock"></i>
-            <input type="password" placeholder="Mot De Passe" name="password" v-model="users.password" />
+            <input
+              type="password"
+              placeholder="Mot De Passe"
+              name="password"
+              v-model="users.password"
+            />
           </div>
+          <span class="error-message">{{ fieldErrors.password }}</span>
 
-          <!-- <div class="input-field">
+          <div class="input-field">
             <i class="fas fa-lock"></i>
             <input
               type="password"
               placeholder="Confirm Mot De Passe"
-              name="confirm_password"
-              v-model="confirm_password"
+              name="confirmPassword"
+              v-model="users.confirmPassword"
             />
-          </div> -->
+          </div>
+          <span class="error-message">{{ fieldErrors.confirmPassword }}</span>
 
           <div class="input-field">
             <i class="fa-solid fa-droplet"></i>
-            <input type="text" placeholder="groupe sanguin" name="bloodGroup" v-model="users.bloodGroup" />
+            <select name="" id="" v-model="users.bloodGroup"
+              ><option value="">GROUPE SANGUIN</option>
+              <option value="NC">NON CONNUE</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O-</option>
+              <option value="O-">O-</option></select
+            >
           </div>
+          <!-- <span class="error-message">{{ fieldErrors.bloodGroup }}</span> -->
+
           <div class="input-field">
             <i class="fa-solid fa-location"></i>
-            <input type="text" placeholder="Votre ville de residence" name="bloodGroup" />
+            <input
+              type="text"
+              placeholder="Votre ville de résidence"
+              name="location"
+              v-model="users.location"
+            />
           </div>
+          <span class="error-message">{{ fieldErrors.location }}</span>
 
-          <input type="submit" class="button" value="Inscription" />
+          <input
+            style="margin-top: 1rem;"
+            type="submit"
+            class="button"
+            value="Inscription"
+          />
 
           <!-- LES LIENS POUR SE CONNECTER EN DEHORS DU FORMULAIRE -->
           <p class="social-text">
@@ -73,118 +108,188 @@
             </a>
           </div>
         </form>
-   
-
       </div>
     </div>
 
     <div class="panels-bottle">
       <div class="panel left-panel">
         <div class="content">
-          <h3>Un d'entre nous ?</h3>
+          <h3 style="color: #fff;">Un d'entre nous ?</h3>
           <p>
-            Super merci de vous connecter et consulter nos actualites,et d'aider
-            un maximun de personne.
+            Super merci de vous connecter et consulter nos actualités,et d'aider
+            un maximum de personnes.
           </p>
           <button class="button transparent" id="sign-in-button">
-            <router-link to="/login"> Se Connecter </router-link>
+            <router-link to="/login">Se Connecter</router-link>
           </button>
         </div>
-        <img src="../../assets/images/undraw_medicine_b-1-ol.svg" class="image" alt="" />
+        <img
+          src="../../assets/images/undraw_medicine_b-1-ol.svg"
+          class="image"
+          alt=""
+        />
       </div>
     </div>
   </div>
 </template>
+
 <script>
 import axios from "axios";
-import Error from "../../components/Error.vue";
-// import Notifications from "vue-notification";
+
 export default {
   name: "register",
   data() {
     return {
-      error: "",
-
       users: {
         name: "",
         email: "",
         password: "",
+        confirmPassword: "",
         bloodGroup: "",
-        location: '',
+        location: "",
       },
-      successMessage: "",
-      errorMessage: "",
+      fieldErrors: {
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        bloodGroup: "",
+        location: "",
+      },
     };
   },
- 
   methods: {
     register() {
+      if (this.validateForm()) {
+        this.AddUsers();
+      }
+    },
+    validateForm() {
+      this.resetFieldErrors();
 
-      this.AddUsers();
+      let isValid = true;
+      if (!this.users.name) {
+    this.fieldErrors.name = "Le nom est obligatoire.";
+    isValid = false;
+  } else if (this.users.name.length < 6) {
+    this.fieldErrors.name = "Le nom doit avoir au moins 6 caractères.";
+    isValid = false;
+  } else if (/[*<>\/()]/.test(this.users.name)) {
+        this.fieldErrors.name =
+          "Le nom ne peut pas contenir les caractères spéciaux * < > / ( ).";
+        isValid = false;
+      }
 
 
+      if (!this.users.email) {
+        this.fieldErrors.email = "L'email est obligatoire.";
+        isValid = false;
+      }
 
+      if (!this.users.password) {
+        this.fieldErrors.password = "Le mot de passe est obligatoire.";
+        isValid = false;
+      }else if (this.users.password.length < 6) {
+        this.fieldErrors.password = "Le mot de passe doit avoir au moins 6 caractères.";
+        isValid = false;
+      }
+
+      if (!this.users.confirmPassword) {
+        this.fieldErrors.confirmPassword =
+          "La confirmation du mot de passe est obligatoire.";
+        isValid = false;
+      } else if (this.users.password !== this.users.confirmPassword) {
+        this.fieldErrors.confirmPassword =
+          "Les mots de passe ne correspondent pas.";
+        isValid = false;
+      }
+
+  //     if (!this.users.bloodGroup) {
+  //   this.fieldErrors.bloodGroup = "Le groupe sanguin est obligatoire.";
+  //   isValid = false;
+  // }
+      if (!this.users.location) {
+        this.fieldErrors.location = "La ville de residence est obligatoires";
+        isValid = false;
+      } else if (/[*<>\/()]/.test(this.users.location)) {
+        this.fieldErrors.location =
+          "La Localisation ne peut pas contenir les caractères spéciaux * < > / ( ).";
+        isValid = false;
+      }
+
+      return isValid;
+    },
+    resetFieldErrors() {
+      for (let field in this.fieldErrors) {
+        this.fieldErrors[field] = "";
+      }
     },
     AddUsers() {
-      try {
-        let url = "http://127.0.0.1:8000/api/simpleUser/register"
-        axios.post(url, this.users).then((response) => {
-          console.log(response)
-
-          this.successMessage = "Inscription réussie. Redirection vers la page de connexion.";
+      let url = "http://127.0.0.1:8000/api/simpleUser/register";
+      axios
+        .post(url, this.users)
+        .then((response) => {
+          console.log(response);
+          this.successMessage =
+            "Inscription réussie. Redirection vers la page de connexion.";
           this.users = {
-            name: '',
-            email: '',
-            password: '',
-            location: '',
+            name: "",
+            email: "",
+            password: "",
+            location: "",
             bloodGroup: "",
+          };
+          this.$router.push({ name: "login" });
+          this.$toast.success("COMPTE CREE");
 
-
-          }
-          // Utiliser v-toaster pour afficher le message de succès
-     
-
-          console.log("yme")
-
-          this.$router.push({ name: 'login' },);
-
-          this.$toast.success(this.successMessage);
         })
-      } catch (error) {
-        //Gérer les erreurs ici
-        if (error.response && error.response.status === 403) {
-          this.errorMessage = "L'email existe déjà.";
-        } else {
-          this.errorMessage = "Une erreur s'est produite lors de l'inscription.";
-        }
-
-        // Utiliser v-toaster pour afficher le message d'erreur
-        this.$toast.error(this.errorMessage);
-        console.log("error")
-
-      }
-    }
-  }
-
+        .catch((error) => {
+          if (error.response && error.response.status === 422) {
+            this.$toast.warning("L'email existe déjà.");
+          } else {
+            this.errorMessage =
+              "Une erreur s'est produite lors de l'inscription.";
+          }
+        });
+    },
+  },
 };
 </script>
-<style>
-body {
-  overflow-x: hidden !important;
-  height: 100vh;
+
+<style scoped></style>
+
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.error-message {
+  color: #00002c;
+  font-weight: 750;
+  font-size: 17px;
+  width: 300px;
+  max-width: 350px;
+}
+.error {
+  border-radius: 4px;
+  padding: 0.3rem;
+  background: #00002c;
+  color: #fff;
 }
 
-h3,
-p {
-  color: #ffffffeb !important;
+body,
+input {
+  font-family: "Poppins", sans-serif;
 }
 
 .bottle {
   position: relative;
   width: 100%;
-  background-color: #fff;
   min-height: 100vh;
-  /* overflow: hidden; */
+  overflow-x: hidden;
 }
 
 .forms-bottle {
@@ -193,6 +298,7 @@ p {
   height: 100%;
   top: 0;
   left: 0;
+  /* background: yellow; */
 }
 
 .signin-signup {
@@ -204,7 +310,8 @@ p {
   transition: 1s 0.7s ease-in-out;
   display: grid;
   grid-template-columns: 1fr;
-  z-index: 5;
+  z-index: 999;
+  /* background-color: red; */
 }
 
 form {
@@ -212,11 +319,15 @@ form {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 0rem 5rem;
+  padding: 0rem 15rem;
   transition: all 0.2s 0.7s;
-  /* overflow: hidden; */
+  overflow: hidden;
   grid-column: 1 / 2;
+  height: 1000px;
+  max-height: 1000px;
+
   grid-row: 1 / 2;
+  /* background: orange; */
 }
 
 form.sign-up-form {
@@ -235,27 +346,29 @@ form.sign-in-form {
 }
 
 .input-field {
-  max-width: 280px;
-  width: 800%;
+  max-width: 380px;
+  width: 100%;
   background-color: #f0f0f0;
   margin: 10px 0;
   height: 55px;
   border-radius: 55px;
   display: grid;
   grid-template-columns: 15% 85%;
-  padding: 0 0.4rem;
+  align-items: center;
+  padding: 0.2rem 0.4rem;
   position: relative;
 }
 
 .input-field i {
   text-align: center;
   line-height: 55px;
-  color: #acacac;
+  color: #ff2770;
   transition: 0.5s;
   font-size: 1.1rem;
 }
 
-.input-field input {
+.input-field input,
+select {
   background: none;
   outline: none;
   border: none;
@@ -264,6 +377,22 @@ form.sign-in-form {
   font-size: 1.1rem;
   color: #333;
 }
+
+.input-field select {
+  background: none !important;
+  outline: none;
+  border: none;
+  line-height: 1;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+/* .nice-select {
+  background-color: #f2f2f2;
+  width: 100% !important;
+  height: 100% !important;
+} */
 
 .input-field input::placeholder {
   color: #aaa;
@@ -296,13 +425,13 @@ form.sign-in-form {
 }
 
 .social-icon:hover {
-  color: #4481eb;
-  border-color: #4481eb;
+  color: #ff2770;
+  border-color: #ff2770;
 }
 
 .button {
   width: 150px;
-  background-color: #04354f;
+  background-color: #ff2770;
   border: none;
   outline: none;
   height: 49px;
@@ -316,7 +445,7 @@ form.sign-in-form {
 }
 
 .button:hover {
-  background-color: #4d84e2;
+  background-color: #680a2a;
 }
 
 .panels-bottle {
@@ -337,7 +466,7 @@ form.sign-in-form {
   top: -10%;
   right: 48%;
   transform: translateY(-50%);
-  background-image: linear-gradient(-45deg, #00002c 21%, #c70808 70%);
+  background: linear-gradient(#25252b, #ff2770, #25252b, #ff2770);
   transition: 1.8s ease-in-out;
   border-radius: 50%;
   z-index: 6;
@@ -395,6 +524,14 @@ form.sign-in-form {
   font-size: 0.8rem;
 }
 
+.button.transparent:hover {
+  background: none;
+}
+
+.button.transparent:hover a {
+  color: #fff;
+}
+
 .right-panel .image,
 .right-panel .content {
   transform: translateX(800px);
@@ -441,13 +578,16 @@ form.sign-in-form {
 
 @media (max-width: 870px) {
   .bottle {
-    min-height: 800px;
-    height: 100vh;
+    min-height: 150vh;
+  }
+
+  form {
+    margin: 2rem 0 0 0;
   }
 
   .signin-signup {
     width: 100%;
-    top: 95%;
+    top: 120%;
     transform: translate(-50%, -100%);
     transition: 1s 0.8s ease-in-out;
   }
