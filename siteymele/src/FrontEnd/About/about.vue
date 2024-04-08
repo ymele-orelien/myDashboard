@@ -280,50 +280,87 @@
 	</section>
 	<!-- End More Services Section -->
 
-	<!-- ======= Testimonials Section ======= -->
-	<section id="testimonials" class="testimonials section-bg">
+<section id="testimonials" class="testimonials section-bg">
+  <div class="container">
+
+	<div class="section-title" data-aos="fade-up">
+	  <h2>AVIS DES PATIENTS RAVIES</h2>
+	  <p>Appercu de tous les patients qui ont ete satisfaire par nous</p>
+	</div>
+
+	<div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+	  <div class="swiper-wrapper">
+
+		<div class="swiper-slide" v-for="(item, index) in Avis" :key="index">
+		  <div class="testimonial-wrap">
+			<div class="testimonial-item">
+			  <h3>{{ item.simple.name }}</h3>
+			  <h4>Donateur</h4>
+			  <p>
+				<i class="bx bxs-quote-alt-left quote-icon-left" ></i>
+{{ item.content }}			<br>	<i class="bx bxs-quote-alt-right quote-icon-right"  style="position: relative;left: 70%;"></i>
+			  </p>
+			</div>
+		  </div>
+		</div><!-- End testimonial item -->
+
+
+
+		
+
+		
+		
+
+	  </div>
+	  <div class="swiper-pagination"></div>
+	</div>
+
+  </div>
+</section>
+
+<!-- End Testimonials Section -->
+
+	<!-- <section id="testimonials" class="testimonials section-bg">
 		<div class="container">
 			<div class="section-title" data-aos="fade-up">
-				<h2>AVIS DES PATIENTS RAVIES</h2>
-				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque illo eveniet autem magni quo labore.</p>
+				<h2>AVIS DES UTILISATEURS </h2>
+				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque illo eveniet autem magni quo labore.
+				</p>
 			</div>
-
-			<div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100" v-if="avis_listAccepter.length > 0">
-				<div class="swiper-wrapper"  v-for="(item, index) in Avis" :key="index">
-					<div class="swiper-slide">v-if="filteredEvent.length > 0"
-						<div class="testimonial-wrap">
-							<div class="testimonial-item">
-							
-								<h3></h3>
-								<p>
-									<i class="bx bxs-quote-alt-left quote-icon-left"></i>
-								{{ item.comtent }}
-									<i class="bx bxs-quote-alt-right quote-icon-right"></i>
-								</p>
+			<div v-if="Avis.length > 0">
+				<div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100"
+					v-for="(item, index) in Avis" :key="index">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">
+							<div class="testimonial-wrap">
+								<div class="testimonial-item">
+									<h3></h3>
+									<p>
+										<i class="bx bxs-quote-alt-left quote-icon-left"></i>
+										{{ item.content }}
+										<i class="bx bxs-quote-alt-right quote-icon-right"></i>
+									</p>
+								</div>
 							</div>
 						</div>
 					</div>
-					<!-- End testimonial item -->
 
-				
-					
-				
+					<div class="swiper-pagination"></div>
 				</div>
-				<div class="swiper-pagination"></div>
 			</div>
-			<div>AUCUN AVIS POUR LE MOMENT</div>
+			<div v-else>AUCUN AVIS POUR LE MOMENT</div>
 		</div>
-	</section>
-	<!-- End Testimonials Section -->
+	</section>  -->
+	<!-- End Testimonials Section
 
-	<!-- ======= Contact Section ======= -->
+	 ======= Contact Section ======= -->
 	<section id="contact" class="contact">
 		<div class="container">
 			<div class="section-title" data-aos="fade-up">
 				<h2>DONNER VOTRE AVIS</h2>
 			</div>
 
-			<div class="row" >
+			<div class="row">
 				<div class="col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="100">
 					<div class="img-box">
 						<img src="../../assets/images/image.png" alt="" />
@@ -345,9 +382,9 @@
 							</p>
 						</div>
 						<div class="form-group">
-							<textarea class="form-control" name="message" rows="5" placeholder="Message" v-model="avis.content"
-								required></textarea>
-								<p v-if="errorMessage" class="text-danger" style="font-weight: 650">{{ errorMessage }}</p>
+							<textarea class="form-control" name="message" rows="5" placeholder="Message"
+								v-model="avis.content"></textarea>
+							<p v-if="errorMessage" class="text-danger" style="font-weight: 650">{{ errorMessage }}</p>
 						</div>
 						<div class="text-center">
 							<button type="submit">envoyer</button>
@@ -363,110 +400,137 @@
 
 <script>
 import axios from 'axios';
+import 'boxicons/css/boxicons.min.css';
+
 
 export default {
-  data() {
-    return {
-      avis: {
-        content: ""
+	data() {
+		return {
+			avis: {
+				content: ""
+			},
+			token: localStorage.getItem("token"),
+			errorMessage: "",
+			isLoggedIn: false,
+			Avis: {}
+		}
+	},
+	mounted() {
+		this.getAuthCheck();
+		this.avis_listAccepter();
+		new Swiper('.testimonials-slider', {
+    speed: 600,
+    loop: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false
+    },
+    slidesPerView: 'auto',
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'bullets',
+      clickable: true
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 20
       },
-      token: localStorage.getItem("token"),
-      errorMessage: "",
-	  isLoggedIn:false,
-	  Avis:{}
+
+      1200: {
+        slidesPerView: 2,
+        spaceBetween: 20
+      }
     }
-  },
-  mounted(){
-	this.getAuthCheck();
-	this.avis_listAccepter();
-  },
-  methods: {
-    validateForm() {
-      this.errorMessage = "";
+  });
+	},
+	methods: {
+		validateForm() {
+			this.errorMessage = "";
 
-      if (!this.avis.content.trim()) {
-        this.errorMessage = "Veuillez saisir votre avis.";
-        return false;
-      }
+			if (!this.avis.content.trim()) {
+				this.errorMessage = "Veuillez saisir votre avis.";
+				return false;
+			}
 
-      if (this.avis.content.trim().length < 20) {
-        this.errorMessage = "Votre avis doit contenir au moins 20 caractères.";
-        return false;
-      }
+			if (this.avis.content.trim().length < 20) {
+				this.errorMessage = "Votre avis doit contenir au moins 20 caractères.";
+				return false;
+			}
 
-      const forbiddenChars = /[*<>]/;
-      if (forbiddenChars.test(this.avis.content)) {
-        this.errorMessage = "Votre avis ne peut pas contenir les caractères spéciaux * < >.";
-        return false;
-      }
+			const forbiddenChars = /[*<>]/;
+			if (forbiddenChars.test(this.avis.content)) {
+				this.errorMessage = "Votre avis ne peut pas contenir les caractères spéciaux * < >.";
+				return false;
+			}
 
-      return true;
-    },
+			return true;
+		},
 
-    avis_register() {
-      if (!this.validateForm()) {
-        return;
-      }
+		avis_register() {
+			if (!this.validateForm()) {
+				return;
+			}
 
-      let url = "http://127.0.0.1:8000/api/avisRegister";
+			let url = "http://127.0.0.1:8000/api/avisRegister";
 
-      axios.post(
-        url,
-        this.avis,
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + this.token,
-          },
-        }
-      )
-      .then((response) => {
-        console.log(response);
+			axios.post(
+				url,
+				this.avis,
+				{
+					headers: {
+						Accept: "application/json",
+						"Content-Type": "application/json",
+						Authorization: "Bearer " + this.token,
+					},
+				}
+			)
+				.then((response) => {
+					console.log(response);
 
-        this.avis.content = "";
+					this.avis.content = "";
 
-        this.$toast.success("AVIS ENREGISTRÉ");
+					this.$toast.success("AVIS ENREGISTRÉ");
 
-        // Réinitialiser le message d'erreur après une soumission réussie
-        this.errorMessage = "";
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        this.errorMessage = "Une erreur s'est produite lors de l'enregistrement de votre avis.";
-      });
-    },
-	getAuthCheck() {
-      axios
-        .get("http://127.0.0.1:8000/api/authUser", {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + this.token,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          this.isLoggedIn = res.data.auth;
-          console.log(this.isLoggedIn);
-        });
-    },
-	avis_listAccepter() {
-      axios
-        .get("http://127.0.0.1:8000/api/avis_listAccepter", {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + this.token,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          this.Avis = res.data.avis;
-          console.log(this.Avis);
-        });
-    },
-  }
+					// Réinitialiser le message d'erreur après une soumission réussie
+					this.errorMessage = "";
+				})
+				.catch((error) => {
+					console.error("Error:", error);
+					this.errorMessage = "Une erreur s'est produite lors de l'enregistrement de votre avis.";
+				});
+		},
+		getAuthCheck() {
+			axios
+				.get("http://127.0.0.1:8000/api/authUser", {
+					headers: {
+						Accept: "application/json",
+						"Content-Type": "application/json",
+						Authorization: "Bearer " + this.token,
+					},
+				})
+				.then((res) => {
+					console.log(res);
+					this.isLoggedIn = res.data.auth;
+					console.log(this.isLoggedIn);
+				});
+		},
+		avis_listAccepter() {
+			axios
+				.get("http://127.0.0.1:8000/api/avis_listAccepter", {
+					headers: {
+						Accept: "application/json",
+						"Content-Type": "application/json",
+						Authorization: "Bearer " + this.token,
+					},
+				})
+				.then((res) => {
+					console.log(res);
+					this.Avis = res.data.avis;
+					console.log(this.Avis);
+				});
+		},
+	}
 }
 </script>
 

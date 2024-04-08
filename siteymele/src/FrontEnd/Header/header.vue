@@ -25,12 +25,19 @@
     <!-- <li>Color Plate With 12+ Colors</li>
     <li>Sticky Header / Sticky Filters</li>
     <li>Working Contact Form With Google Map</li> -->
-    <div class="buttons d-flex">
+    <div class="buttons d-flex" v-if="isLoggedIn">
       <RouterLink to="/profil"  class="btn btn-seconadry" style="background-color: #00002c;"> <i
           class="fa-solid fa-user"></i> Profil</RouterLink>
       <button href="#" target="_blank" class="btn btn-danger" @click="logout()" style="background-color: red">
         <i class="fa-solid faout"></i> Deconnection</button>
     </div>
+    <div class="buttons d-flex" v-else>
+      <RouterLink to="/register"  class="btn btn-seconadry" style="background-color: green;"> <i
+          class="fa-solid fa-user"></i> S'inscire</RouterLink>
+      <button href="#" target="_blank" class="btn btn-danger"  style="background-color: #00002c">
+        <i class="fa-solid faout"></i> <router-link to="/login">Se conneter</router-link></button>
+    </div>
+
   </ul>
   <div class="hearder">
     <div class="nav">
@@ -44,15 +51,17 @@
             <ul v-else style="display: none;visibility: none;"></ul>
           </span>
 
-          <span class="disnone"><router-link to="help" v-if="isLoggedIn">Centre d'aide </router-link>
+          <span class="disnone"><router-link to="event" v-if="isLoggedIn">Evenements </router-link>
             <ul v-else style="display: none;"></ul>
           </span>
 
           <span><router-link to="about">A propos de nous</router-link></span>
         </div>
         <div class="buttons" v-if="isLoggedIn">
-          <routerLink to="/donate" class="btn btn-danger" style="color: #ffff;"><span class="span-none-res">Faire un Don</span> </routerLink>
-          <routerLink to="/demande" class="btn" style="background: #00002c;color:#ffff;"><span class="span-none-res">Faire une demande</span> </routerLink>
+          <routerLink to="/donate" class="btn btn-danger" style="color: #ffff;"> <i class="fa-solid fa-hand-holding-droplet" style="font-size: 20px !important;"></i>
+            <span class="span-none-res">Faire un Don</span> </routerLink>
+          <routerLink to="/demande" class="btn" style="background: #00002c;color:#ffff;">
+            <i class="fa-solid fa-hand-holding-hand" style="font-size: 20px !important;margin-right: 0.2rem;"></i><span class="span-none-res">Faire une demande</span> </routerLink>
         </div>
         <div class="buttons" v-else>
           <routerLink to="/register" class="btn btn-danger" style="background: green;">
@@ -91,6 +100,11 @@ export default {
     window.addEventListener("scroll", this.handleScroll);
     this.getUsers();
     this.getAuthCheck();
+    const heading = document.getElementById('lien');
+    const btn = document.getElementById('toggleBtn');
+    btn.addEventListener('click', (e) => {
+      heading.classList.toggle('hidden');
+    });
   },
   methods: {
     handleScroll() {
@@ -290,7 +304,7 @@ nav .imag span {
     display: inline-block
   }
 }
-@media screen and (max-width: 885px) {
+@media screen and (max-width: 1285px) {
   nav {
     width: 100%;
   }
@@ -327,7 +341,7 @@ nav.sticky .lien a {
   }
 }
 
-@media screen and (max-width: 439px) {
+@media screen and (max-width: 539px) {
   .span-none-res {
     display: none
   }

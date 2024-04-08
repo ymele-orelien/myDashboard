@@ -14,6 +14,7 @@ import about from "../FrontEnd/About/about.vue"
 import urgence from "../FrontEnd/urgence/urgence.vue";
 import profil from "../FrontEnd/Profil/profil.vue"
 import event from "../FrontEnd/evenements/event.vue"
+import errorfound from '../FrontEnd/404found.vue'
 /**
  * ROUTE DES PAGES
  */
@@ -24,108 +25,99 @@ const routes = [
         component: Master,
         children:[
             {
-
-     
-            name: "site",
-            path: "/",
-            component: site
-        },
-        {
-
-     
-            name: "reponse",
-            path: "/response",
-            component: reponse
-        },
-       
-       
-        {
-            name: "urgence",
-            path: "/urgence",
-            component: urgence
-        },
-        {
-            name: "about",
-            path: "/about",
-            component: about
-        },
-        {
-            name: "event",
-            path: "/event",
-            component: event
-        },
-        {
-            name: "donate",
-            path: "/donate",
-            component: donate
-        },
-        {
-            name: "about",
-            path: "/about",
-            component: about
-        },
-        {
-            name: "profil",
-            path: "/profil",
-            component: profil
-        },
-
-        ]
+                name: "site",
+                path: "/",
+                component: site
+            },
+            {
+                name: "reponse",
+                path: "/response",
+                component: reponse
+            },
+            {
+                name: "urgence",
+                path: "/urgence",
+                component: urgence
+            },
+            {
+                name: "about",
+                path: "/about",
+                component: about
+            },
+            {
+                name: "event",
+                path: "/event",
+                component: event
+            },
+            {
+                name: "donate",
+                path: "/donate",
+                component: donate
+            },
+            {
+                name: "profil",
+                path: "/profil",
+                component: profil
+            },
+            {
+                name: "demande",
+                path: "/demande",
+                component: demande
+            },
+            { 
+                path: '/:catchAll(.*)', // Chemin wildcard
+                component: errorfound // Composant de la page 404
+            }
+        ],
     },
     {
-        name: "demande",
-        path: "/demande",
-        component: demande
-    },
-   
-    {
-      path: '/login',
-      name: 'login',
-      component: login
+        path: '/login',
+        name: 'login',
+        component: login
     },
     {
         path: '/register',
         name: 'register',
         component: register
-      },
-]
-const router = Router();
+    },
+];
 
 function loggedIn(){
     return localStorage.getItem('token')
 }
 
+const router = createRouter({
+    history: createWebHistory(),
+    routes,
+});
+
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-        // this route requires auth, check if logged in
-        // if not, redirect to login page.
+        // cette route nécessite une authentification, vérifiez si l'utilisateur est connecté
+        // sinon, redirigez vers la page de connexion.
         if (!loggedIn()) {
             next({
-            path: '/login',
-            query: { redirect: to.fullPath }
-            })
+                path: '/',
+                query: { redirect: to.fullPath }
+            });
         } else {
-            next()
+            next();
         }
-    } else if(to.matched.some(record => record.meta.guest)) {
+    } else if (to.matched.some(record => record.meta.guest)) {
+        // cette route est réservée aux invités, vérifiez si l'utilisateur est connecté
+        // si oui, redirigez-le vers la page d'accueil
         if (loggedIn()) {
             next({
-            path: '/',
-            query: { redirect: to.fullPath }
-            })
+                path: '/',
+                query: { redirect: to.fullPath }
+            });
         } else {
-            next()
+            next();
         }
     } else {
-        next() // make sure to always call next()!
+        // assurez-vous toujours d'appeler next()!
+        next(); // toujours appeler next() pour permettre la navigation normale
     }
-})
+});
 
 export default router;
-function Router() {
-    const router = new createRouter({
-        history: createWebHistory(),
-        routes,
-    });
-    return router;
-}

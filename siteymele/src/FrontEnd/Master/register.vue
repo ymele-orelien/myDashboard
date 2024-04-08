@@ -89,24 +89,7 @@
             value="Inscription"
           />
 
-          <!-- LES LIENS POUR SE CONNECTER EN DEHORS DU FORMULAIRE -->
-          <p class="social-text">
-            Ou Connectez-vous avec les plateformes sociales
-          </p>
-          <div class="social-media">
-            <a href="#" class="social-icon">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="#" class="social-icon">
-              <i class="fa-brands fa-instagram"></i>
-            </a>
-            <a href="#" class="social-icon">
-              <i class="fa-brands fa-gmail"></i>
-            </a>
-            <a href="#" class="social-icon">
-              <i class="fab fa-whatsapp"></i>
-            </a>
-          </div>
+        
         </form>
       </div>
     </div>
@@ -115,7 +98,7 @@
       <div class="panel left-panel">
         <div class="content">
           <h3 style="color: #fff;">Un d'entre nous ?</h3>
-          <p>
+          <p style="color:#fff">
             Super merci de vous connecter et consulter nos actualités,et d'aider
             un maximum de personnes.
           </p>
@@ -216,8 +199,8 @@ export default {
           "La Localisation ne peut pas contenir les caractères spéciaux * < > / ( ).";
         isValid = false;
       }
+      return isValid
 
-      return isValid;
     },
     resetFieldErrors() {
       for (let field in this.fieldErrors) {

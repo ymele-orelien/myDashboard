@@ -40,7 +40,7 @@
 							<p style="color: #00002c !important;font-size: 19px;">Lorem ipsum dolor sit amet consectetur
 								adipisicing elit. Rem doloremque repellat unde quis. Deleniti, at.</p>
 							<!-- Form -->
-							<form class="form" action="mail/mail.php" @submit.prevent="donateSave()">
+							<form class="form" action="mail/mail.php" @submit.prevent="register()">
 								<div class="row">
 									<div class="col">
 										<label for="" class="form-label"> QUEL EST VOTRE LOCALISATION
@@ -48,8 +48,11 @@
 
 										<div class="form-group">
 											<input type="text" name="name" placeholder="LITTORAL/WOURI/DOUALA"
-												required="" v-model="donate.location">
+												 v-model="donate.location">
+										<span class="error-message">{{ fieldErrors.location }}</span>
+
 										</div>
+
 									</div>
 
 
@@ -58,8 +61,9 @@
 										<label for="" class="form-label"> Quels jours serez vous libre?
 											<span>*</span></label>
 										<div class="form-group">
-											<input type="text" name="name" placeholder="LUNDI/MARDI" required=""
+											<input type="date" name="name" placeholder="LUNDI/MARDI" 
 												v-model="donate.date">
+												<span class="error-message">{{ fieldErrors.date }}</span>
 
 										</div>
 									</div>
@@ -128,13 +132,46 @@ export default {
 
 			},
 			token: localStorage.getItem("token"),
+			fieldErrors: {
+				location: "",
+				date: "",
+
+			},
 		};
 	},
 
 	methods: {
-		donateSave() {
-			this.addDonate();
+		register() {
+			if (this.validateFrom()) {
+				this.addDonate();
+			}
 		},
+		validateFrom(){
+			this.resetFieldErrors();
+			let isValid=true;
+			if (!this.donate.location) {
+    this.fieldErrors.location = "La locaslisation est obligatoire.";
+    isValid = false;
+  } else if (this.donate.location.length < 6) {
+    this.fieldErrors.location = "La locaslisation doit avoir au moins 6 caractères.";
+    isValid = false;
+  } else if (/[*<>\/()]/.test(this.donate.location)) {
+        this.fieldErrors.location =
+          "La locaslisation ne peut pas contenir les caractères spéciaux * < > / ( ).";
+        isValid = false;
+      }
+	  if (!this.donate.date) {
+    this.fieldErrors.date = "La date  est obligatoire.";
+    isValid = false;
+  }
+  return isValid;
+
+		}
+, resetFieldErrors() {
+      for (let field in this.fieldErrors) {
+        this.fieldErrors[field] = "";
+      }
+    },
 
 		addDonate() {
 			try {
@@ -174,6 +211,7 @@ export default {
 				console.error("Exception:", error);
 			}
 		},
+
 	},
 };
 </script>
@@ -187,5 +225,12 @@ label {
 
 label span {
 	color: red;
+}
+.error-message {
+  color: #ff2770;
+  font-weight: 750;
+  font-size: 17px;
+  width: 300px;
+  max-width: 350px;
 }
 </style>

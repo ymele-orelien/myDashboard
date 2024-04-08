@@ -41,7 +41,7 @@
                                 elit. Eligendi inventore accusantium obcaecati excepturi corrupti ea cum magni maiores
                                 deserunt sequi. </p>
                             <!-- Form -->
-                            <form class="form" action="mail/mail.php" @submit.prevent="demandeSave()">
+                            <form class="form" action="mail/mail.php" @submit.prevent="register()">
                                 <div class="row">
                                     <div class="col">
                                         <label for="" class="form-label"> QUEL EST VOTRE LOCALISATION
@@ -49,18 +49,21 @@
 
                                         <div class="form-group">
                                             <input type="text" name="name" placeholder="LITTORAL/WOURI/DOUALA"
-                                                required="" v-model="demande.location">
+                                                 v-model="demande.location">
+												<span class="error-message" >{{ fieldErrors.location }}</span>
+
                                         </div>
                                     </div>
 
 
 
                                     <div class="col-lg-12">
-                                        <label for="" class="form-label"> QUEL EST LE GROUPE SANGUIN DONC VOUS AVEZ BESOINS?
+                                        <label for="" class="form-label"> QUEL EST LE GROUPE SANGUIN DONC VOUS AVEZ
+                                            BESOINS?
                                             <span>*</span></label>
                                         <div class="form-group">
-                                            <select name="" id="" class="form-control" v-model="demande.bloodGroup"> 
-                                                <option value="" >SECTIONNEZ UN GROUPE SANGUIN</option>
+                                            <select name="" id="" class="form-control" v-model="demande.bloodGroup">
+                                                <option value="">SECTIONNEZ UN GROUPE SANGUIN</option>
                                                 <option value="A+">A+</option>
                                                 <option value="A-">A-</option>
                                                 <option value="B+">B+</option>
@@ -70,6 +73,8 @@
                                                 <option value="O+">O+</option>
                                                 <option value="O-">O-</option>
                                             </select>
+												<span class="error-message">{{ fieldErrors.bloodGroup }}</span>
+
                                         </div>
                                     </div>
                                     <div class="col">
@@ -77,16 +82,21 @@
                                             <span>*</span></label>
 
                                         <div class="form-group">
-                                            <input type="text" name="name" placeholder="LITTORAL/WOURI/DOUALA"
-                                                required="" v-model="demande.quantite">
+                                            <input type="number" name="name"  v-model="demande.quantite">
+												<span class="error-message">{{ fieldErrors.quantite }}</span>
+
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <label for="" class="form-label">DECRIVEZ NOUS LA SITUATIONS QUI NECESSITES DES POCHES
+                                        <label for="" class="form-label">DECRIVEZ NOUS LA SITUATIONS QUI NECESSITES DES
+                                            POCHES
                                             <span>*</span></label>
 
                                         <div class="form-group">
-                                          <textarea name="" id="" cols="30" rows="10" v-model="demande.detail"></textarea>
+                                            <textarea name="" id="" cols="30" rows="10"
+                                                v-model="demande.detail"></textarea>
+												<span class="error-message">{{ fieldErrors.detail }}</span>
+
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -142,72 +152,122 @@
 </template>
 <script>
 import axios from 'axios';
+
 export default {
-    name: "demande",
-    data() {
-        return {
-            demande: {
-                location: "",
-                bloodGroup: "",
-                detail: ""
+  name: "demande",
+  data() {
+    return {
+      demande: {
+        location: "",
+        bloodGroup: "",
+        detail: "",
+        quantite: ""
+      },
+      token: localStorage.getItem("token"),
+      fieldErrors: {
+        location: "",
+        bloodGroup: "",
+        detail: "",
+        quantite: ""
+      }
+    };
+  },
+  methods: {
+    register() {
+      if (this.validateFrom()) {
+        this.addDemande();
+      }
+    },
+    validateFrom() {
+      this.resetFieldErrors();
+      let isValid = true;
 
+      // Location
+      if (!this.demande.location) {
+        this.fieldErrors.location = "La locaslisation est obligatoire.";
+        isValid = false;
+      } else if (this.demande.location.length < 6) {
+        this.fieldErrors.location = "La localisation doit avoir au moins 6 caractères.";
+        isValid = false;
+      } else if (/[*<>\/()]/.test(this.demande.location)) {
+        this.fieldErrors.location = "La localisation ne peut pas contenir les caractères spéciaux * < > / ( ).";
+        isValid = false;
+      }
+
+      // Blood Group
+      if (!this.demande.bloodGroup) {
+        this.fieldErrors.bloodGroup = "La date  est obligatoire.";
+        isValid = false;
+      }
+
+      // Detail
+      if (/[*<>\/()]/.test(this.demande.detail)) {
+        this.fieldErrors.detail = "La description ne peut pas contenir les caractères spéciaux * < > / ( ).";
+        isValid = false;
+      }
+
+      // Quantite
+      if (!this.demande.quantite) {
+        this.fieldErrors.quantite = "La Quantite est obligatoire.";
+        isValid = false;
+      }
+
+      return isValid;
+    },
+    resetFieldErrors() {
+      for (let field in this.fieldErrors) {
+        this.fieldErrors[field] = "";
+      }
+    },
+    addDemande() {
+      try {
+        let url = "http://127.0.0.1:8000/api/demande/register";
+
+        axios.post(
+          url,
+          this.demande,
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + this.token,
             },
-            token: localStorage.getItem("token"),
-        };
+          }
+        ).then((response) => {
+          console.log(response);
+          this.demande = {
+            location: "",
+            bloodGroup: "",
+            detail: "",
+            quantite: ""
+          };
+          this.$toast.success('DEMANDE ENVOYER')
+          this.$router.push({ name: "reponse" });
+        }).catch((error) => {
+          console.error("Error:", error);
+        });
+      } catch (error) {
+        console.error("Exception:", error);
+      }
     },
-
-    methods: {
-        demandeSave() {
-            this.addDemande();
-        },
-
-        addDemande() {
-            try {
-                let url = "http://127.0.0.1:8000/api/demande/register";
-
-                axios
-                    .post(
-                        url,
-                        this.demande,
-                        {
-                            headers: {
-                                Accept: "application/json",
-                                "Content-Type": "application/json",
-                                Authorization: "Bearer " + this.token,
-                            },
-                        }
-                    )
-                    .then((response) => {
-                        console.log(response);
-
-                        this.demande = {
-                            location: "",
-                            bloodGroup: "",
-                            detail: ""
-
-                        };
-
-                        console.log("Success!");
-
-                        this.$router.push({ name: "reponse" });
-                    })
-                    .catch((error) => {
-                        console.error("Error:", error);
-                    });
-            } catch (error) {
-                console.error("Exception:", error);
-            }
-        },
-    },
+  },
 };
 </script>
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 
-label{
+label {
     font-weight: 650;
 }
-label span{
+.error-message {
+  color: #ff2770;
+  font-weight: 750;
+  font-size: 17px;
+  width: 300px;
+  max-width: 350px;
+}
+
+label span {
     color: red;
     font-size: 22px;
 }

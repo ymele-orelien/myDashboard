@@ -40,7 +40,8 @@ import { RouterLink } from 'vue-router';
                                     <div class="meta-left">
                                         <span class="author"><a href="#"><i class="fa-regular fa-circle-user"
                                                     style="font-size: 30px;"></i> Compte cree le</a></span>
-                                        <span class="date"><i class="fa-regular fa-clock"></i>{{ users.created_at }}</span>
+                                        <span class="date"><i class="fa-regular fa-clock"></i>{{ users.created_at
+                                            }}</span>
                                     </div>
                                     <div class="meta-right">
                                         <span class="comments"><a href="#"><i class="fa fa-hand-holding-droplet"></i>05
@@ -162,15 +163,19 @@ import { RouterLink } from 'vue-router';
                             <h3 class="title">Modifier vos informations</h3>
                             <!-- Single Post -->
                             <div class="single-post">
-                                <form class="single-post" @submit.prevent="updateUsers()">
+                                <form class="single-post" @submit.prevent="update()">
                                     <div class="image">
                                         <i class="fa-regular fa-user"></i><strong><input type="text"
                                                 class="form-control" style="width: 200px;height: 50px;"
                                                 v-model="users.name"></strong>
+
                                     </div>
+                                    <span class="error-message">{{ fieldErrors.name }}</span>
+
                                     <div class="image">
                                         <i class="fa-solid fa-droplet"></i><strong><select name="" id=""
-                                                class="form-control " style="width: 200px;height: 50px;" v-model="users.bloodGroup">
+                                                class="form-control " style="width: 200px;height: 50px;"
+                                                v-model="users.bloodGroup">
                                                 <option value="">A+</option>
                                                 <option value="">A-</option>
                                                 <option value="">B+</option>
@@ -180,57 +185,69 @@ import { RouterLink } from 'vue-router';
                                                 <option value="">O+</option>
                                                 <option value="">O-</option>
                                             </select></strong>
+
                                     </div>
 
                                     <div class="image">
                                         <i class="fa-solid fa-location-dot"></i><strong><input type="text"
                                                 class="form-control" placeholder="localisation"
                                                 style="width: 200px;height: 50px;" v-model="users.location"></strong>
+
                                     </div>
+                                    <span class="error-message">{{ fieldErrors.location }}</span>
+
                                     <button type="submit" class="btn btn-success"
                                         style="background: green; margin: 0.2rem;"> Modifier</button>
 
                                 </form>
 
-                            <!-- End Single Post -->
+                                <!-- End Single Post -->
+                            </div>
+
+
                         </div>
 
+                        <div class="single-widget recent-post">
+                            <h3 class="title">Changer Mot de passe</h3>
+                            <!-- Single Post -->
+                            <form class="single-post" @submit.prevent="updatePass()">
+                                <div class="single-post">
+                                    <div class="image">
+                                        <i class="fa-solid fa-lock-open"></i><strong><input type="password"
+                                                class="form-control" v-model="currentPassword"
+                                                style="width: 200px;height: 50px;"
+                                                placeholder="Mot de passe actuel"></strong>
 
-                    </div>
+                                    </div>
+                                    <div class="error-message">{{ fieldErrors.currentPassword }}</div>
 
-                    <div class="single-widget recent-post">
-                        <h3 class="title">Changer Mot de passe</h3>
-                        <!-- Single Post -->
-                        <form class="single-post" @submit.prevent="changePassword()">
-                            <div class="single-post">
-                                <div class="image">
-                                    <i class="fa-solid fa-lock-open"></i><strong><input type="password" class="form-control" v-model="currentPassword"
-                                            style="width: 200px;height: 50px;"
-                                            placeholder="Mot de passe actuel"></strong>
+                                    <div class="image">
+                                        <i class="fa-solid fa-unlock-keyhole"></i><strong><input type="password"
+                                                class="form-control" style="width: 200px;height: 50px;"
+                                                placeholder="Nouveau Mot passe" v-model="newPassword"></strong>
+                                    </div>
+                                    <div class="error-message">{{ fieldErrors.newPassword }}</div>
+
+
+                                    <div class="image">
+                                        <i class="fa-solid fa-unlock-keyhole"></i><strong><input type="password"
+                                                class="form-control" placeholder="Confirm Mot Passe"
+                                                style="width: 200px;height: 50px;" v-model="confirmPassword"></strong>
+                                    </div>
+                                    <div class="error-message">{{ fieldErrors.confirmPassword }}</div>
+
+                                    <button type="submit" class="btn btn-success"
+                                        style="background: green; margin: 0.2rem;"> Modifier</button>
+
                                 </div>
-                                <div class="image">
-                                    <i class="fa-solid fa-unlock-keyhole"></i><strong><input type="password"
-                                            class="form-control" style="width: 200px;height: 50px;"
-                                            placeholder="Nouveau Mot passe" v-model="newPassword"></strong>
-                                </div>
-
-                                <div class="image">
-                                    <i class="fa-solid fa-unlock-keyhole"></i><strong><input type="password"
-                                            class="form-control" placeholder="Confirm Mot Passe"
-                                            style="width: 200px;height: 50px;" v-model="confirmPassword" ></strong>
-                                </div>
-                                <button type="submit" class="btn btn-success"
-                                    style="background: green; margin: 0.2rem;"> Modifier</button>
-
-                            </div>
-                            <!-- End Single Post -->
-                        </form>
+                                <!-- End Single Post -->
+                            </form>
 
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </section>
     <!--/ End Single News -->
@@ -250,13 +267,25 @@ export default {
             token: localStorage.getItem("token"),
             currentPassword: "",
             newPassword: "",
-            confirmPassword: ""
+            confirmPassword: "",
+            fieldErrors: {
+                name: "",
+
+                location: "",
+            currentPassword: "",
+
+                newPassword:"",
+                confirmPassword:""
+
+            }
         };
     },
     mounted() {
         this.getUsers();
     },
     methods: {
+        //AFFICHER LES INFORMATIONS DE LUTILISATEURS
+
         getUsers() {
             axios
                 .get(PROFILE_URL, {
@@ -275,28 +304,96 @@ export default {
                     // Gérez les erreurs ici (ex: afficher un message à l'utilisateur)
                 });
         },
-        updateUsers() {
-            const updatedUser = {
-                name: this.users.name,
-                role: this.users.role,
-                location: this.users.location,
-                description: this.users.description
-            };
-
-            axios.put(UPDATE_USER_URL, updatedUser, {
-                headers: {
-                    Authorization: "Bearer " + this.token,
-                },
-            })
-                .then((res) => {
-                    console.log(res.data);
-                    this.$toast.success('Modification réussie');
-                })
-                .catch((error) => {
-                    console.error("Error updating user:", error);
-                    this.$toast.error('Échec de la modification');
-                });
+        update() {
+            if (this.validateForm()) {
+                this.updateUsers();
+            }
         },
+        updatePass(){
+            if(this.validateFormPass()){
+this.changePassword();
+            }
+        },
+        validateForm() {
+            this.resetFieldErrors();
+
+            let isValid = true;
+            if (this.users.name.length < 6) {
+                this.fieldErrors.name = "Le nom doit avoir au moins 6 caractères.";
+                isValid = false;
+            } else if (/[*<>\/()]/.test(this.users.name)) {
+                this.fieldErrors.name =
+                    "Le nom ne peut pas contenir les caractères spéciaux * < > / ( ).";
+                isValid = false;
+            }
+
+            if (/[*<>\/()]/.test(this.users.location)) {
+                this.fieldErrors.location =
+                    "La Localisation ne peut pas contenir les caractères spéciaux * < > / ( ).";
+                isValid = false;
+            }
+            return isValid;
+        },
+        validateFormPass() {
+    this.resetFieldErrors();
+
+    let isValid = true;
+    if (!this.currentPassword) {
+        this.fieldErrors.currentPassword = "Le champ est obligatoire";
+        isValid = false;
+    } else if (this.currentPassword.length < 6) {
+        this.fieldErrors.currentPassword = "Le mot de passe actuel doit avoir au moins 6 caractères.";
+        isValid = false;
+    }
+
+    if (!this.newPassword) {
+        this.fieldErrors.newPassword = "Le champ est obligatoire.";
+        isValid = false;
+    } else if (this.newPassword.length < 6) {
+        this.fieldErrors.newPassword = "Le Nouveau Mot de Passe doit avoir au moins 6 caractères.";
+        isValid = false;
+    }
+
+    if (!this.confirmPassword) {
+        this.fieldErrors.confirmPassword = "Le champ est obligatoire.";
+        isValid = false;
+    } else if (this.confirmPassword !== this.newPassword) {
+        this.fieldErrors.confirmPassword = "La confirmation du mot de passe est différente.";
+        isValid = false;
+    }
+
+    return isValid;
+},
+
+        resetFieldErrors() {
+            for (let field in this.fieldErrors) {
+                this.fieldErrors[field] = "";
+            }
+        },
+        //MODIFIERS
+        updateUsers() {
+    const updatedUser = {
+        name: this.users.name,
+        role: this.users.role,
+        location: this.users.location,
+        description: this.users.description
+    };
+
+    axios.put(UPDATE_USER_URL, updatedUser, {
+        headers: {
+            Authorization: "Bearer " + this.token,
+        },
+    })
+    .then((res) => {
+        console.log(res.data);
+        this.$toast.success('Modification réussie');
+    })
+    .catch((error) => {
+        console.error("Error updating user:", error);
+        this.$toast.error('Échec de la modification');
+    });
+},
+        //CHANGER LE MOTS DE PASSE
         changePassword() {
             const requestData = {
                 current_password: this.currentPassword,
@@ -316,8 +413,14 @@ export default {
                     this.$toast.success('Modification du mot de passe réussie');
                 })
                 .catch((error) => {
+                    if(error.response && error.response.status === 403){
+this.$toast.warning("L'ancien mot de passe est incorecte")
+                    }
+                    if(error.response && error.response.status === 422){
+                        this.$toast.error('Verifier les champs mot de passe et nouveau mot de passe');
+
+                    }
                     console.error("Error updating password:", error);
-                    this.$toast.error('Échec de la modification du mot de passe');
                 });
         },
     },
@@ -349,5 +452,12 @@ h3 {
 
 .single-post {
     margin-top: -5%;
+}
+.error-message {
+  color: #ff2770;
+  font-weight: 750;
+  font-size: 17px;
+  width: 300px;
+  max-width: 350px;
 }
 </style>
