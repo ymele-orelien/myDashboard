@@ -48,8 +48,8 @@
 
 										<div class="form-group">
 											<input type="text" name="name" placeholder="LITTORAL/WOURI/DOUALA"
-												 v-model="donate.location">
-										<span class="error-message">{{ fieldErrors.location }}</span>
+												v-model="donate.location">
+											<span class="error-message">{{ fieldErrors.location }}</span>
 
 										</div>
 
@@ -61,9 +61,9 @@
 										<label for="" class="form-label"> Quels jours serez vous libre?
 											<span>*</span></label>
 										<div class="form-group">
-											<input type="date" name="name" placeholder="LUNDI/MARDI" 
-												v-model="donate.date">
-												<span class="error-message">{{ fieldErrors.date }}</span>
+											<input type="date" name="name" placeholder="LUNDI/MARDI"
+												v-model="donate.detail">
+											<span class="error-message">{{ fieldErrors.detail }}</span>
 
 										</div>
 									</div>
@@ -128,13 +128,14 @@ export default {
 		return {
 			donate: {
 				location: "",
+				detail: ""
 
 
 			},
 			token: localStorage.getItem("token"),
 			fieldErrors: {
 				location: "",
-				date: "",
+				detail: "",
 
 			},
 		};
@@ -146,32 +147,32 @@ export default {
 				this.addDonate();
 			}
 		},
-		validateFrom(){
+		validateFrom() {
 			this.resetFieldErrors();
-			let isValid=true;
+			let isValid = true;
 			if (!this.donate.location) {
-    this.fieldErrors.location = "La locaslisation est obligatoire.";
-    isValid = false;
-  } else if (this.donate.location.length < 6) {
-    this.fieldErrors.location = "La locaslisation doit avoir au moins 6 caractères.";
-    isValid = false;
-  } else if (/[*<>\/()]/.test(this.donate.location)) {
-        this.fieldErrors.location =
-          "La locaslisation ne peut pas contenir les caractères spéciaux * < > / ( ).";
-        isValid = false;
-      }
-	  if (!this.donate.date) {
-    this.fieldErrors.date = "La date  est obligatoire.";
-    isValid = false;
-  }
-  return isValid;
+				this.fieldErrors.location = "La locaslisation est obligatoire.";
+				isValid = false;
+			} else if (this.donate.location.length < 2) {
+				this.fieldErrors.location = "La locaslisation doit avoir au moins 6 caractères.";
+				isValid = false;
+			} else if (/[*<>\/()]/.test(this.donate.location)) {
+				this.fieldErrors.location =
+					"La locaslisation ne peut pas contenir les caractères spéciaux * < > / ( ).";
+				isValid = false;
+			}
+			if (!this.donate.detail) {
+				this.fieldErrors.detail = "La date  est obligatoire.";
+				isValid = false;
+			}
+			return isValid;
 
 		}
-, resetFieldErrors() {
-      for (let field in this.fieldErrors) {
-        this.fieldErrors[field] = "";
-      }
-    },
+		, resetFieldErrors() {
+			for (let field in this.fieldErrors) {
+				this.fieldErrors[field] = "";
+			}
+		},
 
 		addDonate() {
 			try {
@@ -194,6 +195,7 @@ export default {
 
 						this.donate = {
 							location: "",
+							detail: ""
 
 						};
 
@@ -226,11 +228,12 @@ label {
 label span {
 	color: red;
 }
+
 .error-message {
-  color: #ff2770;
-  font-weight: 750;
-  font-size: 17px;
-  width: 300px;
-  max-width: 350px;
+	color: #ff2770;
+	font-weight: 750;
+	font-size: 17px;
+	width: 300px;
+	max-width: 350px;
 }
 </style>

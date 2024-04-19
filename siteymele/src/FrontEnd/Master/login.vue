@@ -54,19 +54,7 @@
         </div>
         <img src="../../assets/images/undraw_medicine_b-1-ol.svg" class="image" alt="" />
       </div>
-      <!-- <div class="panel right-panel">
-        <div class="content">
-          <h3>One of us ?</h3>
-          <p class="text-white">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-            laboriosam ad deleniti.
-          </p>
-          <button class="button transparent" id="sign-in-button">
-            Sign in
-          </button>
-        </div>
-        <img src="../assets/images/undraw_doctors_p6aq.svg" class="image" alt="" />
-      </div> -->
+   
     </div>
   </div>
 </template>

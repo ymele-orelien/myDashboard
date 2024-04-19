@@ -12,6 +12,7 @@ import demande from "../FrontEnd/Demande/demande.vue";
 import donate from "../FrontEnd/Demande/don.vue";
 import about from "../FrontEnd/About/about.vue"
 import urgence from "../FrontEnd/urgence/urgence.vue";
+import code from "../FrontEnd/Master/code.vue";
 import profil from "../FrontEnd/Profil/profil.vue"
 import event from "../FrontEnd/evenements/event.vue"
 import errorfound from '../FrontEnd/404found.vue'
@@ -79,6 +80,11 @@ const routes = [
         path: '/register',
         name: 'register',
         component: register
+    },
+    {
+        path: '/code',
+        name: 'code',
+        component: code
     },
 ];
 

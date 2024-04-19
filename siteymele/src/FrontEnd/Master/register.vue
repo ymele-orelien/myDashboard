@@ -187,10 +187,10 @@ export default {
         isValid = false;
       }
 
-  //     if (!this.users.bloodGroup) {
-  //   this.fieldErrors.bloodGroup = "Le groupe sanguin est obligatoire.";
-  //   isValid = false;
-  // }
+      if (!this.users.bloodGroup) {
+    this.fieldErrors.bloodGroup = "Ce champ  est obligatoire.";
+    isValid = false;
+  }
       if (!this.users.location) {
         this.fieldErrors.location = "La ville de residence est obligatoires";
         isValid = false;
@@ -212,7 +212,9 @@ export default {
       axios
         .post(url, this.users)
         .then((response) => {
-          console.log(response);
+          localStorage.setItem('token', response.data)
+
+          console.log(response.data);
           this.successMessage =
             "Inscription réussie. Redirection vers la page de connexion.";
           this.users = {
@@ -222,7 +224,7 @@ export default {
             location: "",
             bloodGroup: "",
           };
-          this.$router.push({ name: "login" });
+          this.$router.push({ name: "code" });
           this.$toast.success("COMPTE CREE");
 
         })
@@ -232,6 +234,8 @@ export default {
           } else {
             this.errorMessage =
               "Une erreur s'est produite lors de l'inscription.";
+            this.$toast.warning("Une erreur s'est produite lors de l'inscription.");
+
           }
         });
     },
