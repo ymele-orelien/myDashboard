@@ -8,7 +8,7 @@
                 <div class="center-opt">
                     <div class="text">
                         <h4>Entrer le code de vérification</h4>
-                        <p>Un code de vérification a été envoyé à l'adresse <strong>{{ users.email }}</strong></p>
+                        <p>Un code de vérification a été envoyé à l'adresse <strong>{{ users.name }}</strong></p>
                     </div>
                     <form @submit.prevent="submitOTP">
                         <div class="input-field">
@@ -30,6 +30,7 @@
 import axios from 'axios';
 
 const PROFILE_URL = "http://127.0.0.1:8000/api/simpleUser/profile";
+const VALIDATE_CODE_URL = "http://127.0.0.1:8000/api/validateCode";
 
 export default {
     data() {
@@ -42,7 +43,7 @@ export default {
     },
     mounted() {
         this.token = localStorage.getItem("token");
-    console.log("Token:", this.token);
+        console.log("Token:", this.token);
         this.getUsers();
         this.addInputListeners();
     },
@@ -95,22 +96,37 @@ export default {
 
             window.addEventListener("load", () => inputs[0].focus());
         },
-        // async submitOTP() {
-        //     const otp = this.otpInput.join('');
+        async submitOTP() {
+            const otp = this.otpInput.join('');
 
-        //     try {
-        //         const response = await axios.post('http://127.0.0.1:8000/api/user/validate_code', { otp });
-        //         console.log(response.data);
-        //         this.$router.push('/login');
-        //     } catch (error) {
-        //         this.showError = true;
-        //     }
-        // },
+            try {
+                const response = await axios.post(VALIDATE_CODE_URL, { code: otp }, {
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + this.token,
+                    },
+                });
+
+                if (response.status === 200) {
+                    console.log(response.data);
+                    this.$router.push('/login'); // Redirige vers la page de connexion après succès
+                }
+            } catch (error) {
+                console.error("Error submitting OTP:", error);
+                if(error.response && error.response.status === 401){
+                    this.showError = true; // Affiche le message d'erreur
+
+                }else{
+                    this.$toast.warning("une erreur c'est produite!")
+
+                }
+                
+            }
+        },
     },
 };
 </script>
-
-
 
 <style scoped>
 .content {

@@ -5,6 +5,10 @@ import { createRouter, createWebHistory } from "vue-router"
 import Master from "../FrontEnd/Master/Master.vue";
 
 import login from '../FrontEnd/Master/login.vue';
+import passwordForget from '../FrontEnd/Master/passwordForget.vue';
+import code_passwordForget from '../FrontEnd/Master/code_passwordForget.vue';
+import newPassword from '../FrontEnd/Master/newpassword.vue';
+
 import register from '../FrontEnd/Master/register.vue';
 import site from '../FrontEnd/Master/site.vue';
 import reponse from '../FrontEnd/Reponse/reponse.vue';
@@ -86,6 +90,23 @@ const routes = [
         name: 'code',
         component: code
     },
+    {
+        path: '/passwordForget',
+        name: 'passwordForget',
+        component: passwordForget
+    },
+    {
+        path: '/code_passwordForget',
+        name: 'code_passwordForget',
+        component: code_passwordForget
+    },
+    {
+        path: '/newPassword',
+        name: 'newPassword',
+        component: newPassword
+    },
+
+    
 ];
 
 function loggedIn(){

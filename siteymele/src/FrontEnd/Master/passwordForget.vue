@@ -4,95 +4,31 @@
       <div class="signin-signup">
         <!-- FORMULAIRE D INSCRIPTION -->
         <form @submit.prevent="register" class="sign-in-form">
-          <img src="../../assets/images/logos/logoheader.jpg" alt="" />
+          <div style="display: flex;margin: 2rem;">
+            <img src="../../assets/images/logos/logoheader.jpg" class="ime" alt="" /> <span
+              style="font-size: 25px;margin-top:  2rem;margin-left:0.3rem;font-size: 25px;"><strong>BLOOD  <br> DONATE</strong></span>
 
-          <h2 class="title" style="color: #00002c; font-weight: 600;">
-            S'inscrire
-          </h2>
-
-          <div class="input-field">
-            <i class="fas fa-user"></i>
-            <input
-              type="text"
-              placeholder="Nom && Prenom"
-              name="name"
-              v-model="users.name"
-            />
           </div>
-          <span class="error-message">{{ fieldErrors.name }}</span>
+          <span class="" style="color: #00002c; font-weight: 600;width: 500px;">
+            ENTRER VOTRE ADRESSE EMAIL POUR RECUPERER VOTRE COMPTE
+          </span>
+
+
 
           <div class="input-field">
-            <i class="fas fa-user"></i>
-            <input
-              type="email"
-              placeholder="Email"
-              name="email"
-              v-model="users.email"
-            />
+            <i class="fas fa-envelope"></i>
+            <input type="email" placeholder="Email" name="email" v-model="users.email" />
           </div>
           <span class="error-message">{{ fieldErrors.email }}</span>
 
-          <div class="input-field">
-            <i class="fas fa-lock"></i>
-            <input
-              type="password"
-              placeholder="Mot De Passe"
-              name="password"
-              v-model="users.password"
-            />
-          </div>
-          <span class="error-message">{{ fieldErrors.password }}</span>
 
-          <div class="input-field">
-            <i class="fas fa-lock"></i>
-            <input
-              type="password"
-              placeholder="Confirm Mot De Passe"
-              name="confirmPassword"
-              v-model="users.confirmPassword"
-            />
-          </div>
-          <span class="error-message">{{ fieldErrors.confirmPassword }}</span>
 
-          <div class="input-field">
-            <i class="fa-solid fa-droplet"></i>
-            <select name="" id="" v-model="users.bloodGroup"
-              ><option value="">GROUPE SANGUIN</option>
-              <option value="NC">NON CONNUE</option>
-              <option value="A+">A+</option>
-              <option value="A-">A-</option>
-              <option value="B+">B+</option>
-              <option value="B-">B-</option>
-              <option value="AB+">AB+</option>
-              <option value="AB-">AB-</option>
-              <option value="O+">O-</option>
-              <option value="O-">O-</option></select
-            >
-          </div>
-          <!-- <span class="error-message">{{ fieldErrors.bloodGroup }}</span> -->
 
-          <div class="input-field">
-            <i class="fa-solid fa-location"></i>
-            <input
-              type="text"
-              placeholder="Votre ville de résidence"
-              name="location"
-              v-model="users.location"
-            />
-          </div>
-          <span class="error-message">{{ fieldErrors.location }}</span>
 
- 
 
-  <button class="button" type="submit" :disabled="spinner">
-            <span v-if="!spinner">Inscription</span>
-            <span v-else>
-              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-              <span class="visually-hidden">Chargement...</span>
-            </span>
-          </button>
+          <input style="margin-top: 1rem;" type="submit" class="button" value="Trouver" />
 
-        
+
         </form>
       </div>
     </div>
@@ -109,11 +45,7 @@
             <router-link to="/login">Se Connecter</router-link>
           </button>
         </div>
-        <img
-          src="../../assets/images/undraw_medicine_b-1-ol.svg"
-          class="image"
-          alt=""
-        />
+        <img src="../../assets/images/undraw_medicine_b-1-ol.svg" class="image" alt="" />
       </div>
     </div>
   </div>
@@ -127,23 +59,13 @@ export default {
   data() {
     return {
       users: {
-        name: "",
         email: "",
-        password: "",
-        confirmPassword: "",
-        bloodGroup: "",
-        location: "",
+
       },
       fieldErrors: {
-        name: "",
         email: "",
-        password: "",
-        confirmPassword: "",
-        bloodGroup: "",
-        location: "",
-      },
-      spinner: false, // Ajout de la propriété spinner
 
+      },
       successMessage: "",
       errorMessage: "",
     };
@@ -158,44 +80,13 @@ export default {
       this.resetFieldErrors();
       let isValid = true;
 
-      if (!this.users.name) {
-        this.fieldErrors.name = "Le nom est obligatoire.";
-        isValid = false;
-      } else if (this.users.name.length < 6) {
-        this.fieldErrors.name = "Le nom doit avoir au moins 6 caractères.";
-        isValid = false;
-      }
 
       if (!this.users.email) {
         this.fieldErrors.email = "L'email est obligatoire.";
         isValid = false;
       }
 
-      if (!this.users.password) {
-        this.fieldErrors.password = "Le mot de passe est obligatoire.";
-        isValid = false;
-      } else if (this.users.password.length < 6) {
-        this.fieldErrors.password = "Le mot de passe doit avoir au moins 6 caractères.";
-        isValid = false;
-      }
 
-      if (!this.users.confirmPassword) {
-        this.fieldErrors.confirmPassword = "La confirmation du mot de passe est obligatoire.";
-        isValid = false;
-      } else if (this.users.password !== this.users.confirmPassword) {
-        this.fieldErrors.confirmPassword = "Les mots de passe ne correspondent pas.";
-        isValid = false;
-      }
-
-      if (!this.users.bloodGroup) {
-        this.fieldErrors.bloodGroup = "Le groupe sanguin est obligatoire.";
-        isValid = false;
-      }
-
-      if (!this.users.location) {
-        this.fieldErrors.location = "La ville de résidence est obligatoire.";
-        isValid = false;
-      }
 
       return isValid;
     },
@@ -205,23 +96,19 @@ export default {
       }
     },
     AddUser() {
-      let url = "http://127.0.0.1:8000/api/simpleUser/register";
-      this.spinner = true; // Affichage du spinner
-
+      let url = "http://127.0.0.1:8000/api/passwordForget";
       axios
         .post(url, this.users)
         .then((response) => {
           console.log(response.data);
           this.successMessage = "Inscription réussie. Redirection vers la page de connexion.";
           this.users = {
-            name: "",
             email: "",
-            password: "",
-            location: "",
-            bloodGroup: "",
+
+
           };
           localStorage.setItem('token', response.data.token); // Assurez-vous que la réponse de l'API contient un champ 'token'
-          this.$router.push('/code');
+          this.$router.push('/code_passwordForget');
           this.$toast.success("COMPTE CRÉÉ");
         })
         .catch((error) => {
@@ -231,9 +118,7 @@ export default {
             this.errorMessage = "Une erreur s'est produite lors de l'inscription.";
             this.$toast.warning("Une erreur s'est produite lors de l'inscription.");
           }
-        }) .finally(() => {
-          this.spinner = false; // Masquage du spinner
-        });;
+        });
     },
   },
 };
@@ -250,6 +135,7 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
+
 .error-message {
   color: #00002c;
   font-weight: 750;
@@ -257,6 +143,7 @@ export default {
   width: 300px;
   max-width: 350px;
 }
+
 .error {
   border-radius: 4px;
   padding: 0.3rem;
@@ -267,6 +154,13 @@ export default {
 body,
 input {
   font-family: "Poppins", sans-serif;
+}
+
+.ime {
+
+  width: 80px;
+  height: 80px;
+  border: 1px solid #00002c;
 }
 
 .bottle {
@@ -287,7 +181,7 @@ input {
 
 .signin-signup {
   position: absolute;
-  top: 50%;
+  top: 30%;
   transform: translate(-50%, -50%);
   left: 75%;
   width: 50%;
@@ -373,10 +267,10 @@ select {
 }
 
 /* .nice-select {
-  background-color: #f2f2f2;
-  width: 100% !important;
-  height: 100% !important;
-} */
+    background-color: #f2f2f2;
+    width: 100% !important;
+    height: 100% !important;
+  } */
 
 .input-field input::placeholder {
   color: #aaa;

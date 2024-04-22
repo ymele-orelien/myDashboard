@@ -15,7 +15,7 @@
             <input type="password" placeholder="Password" name="password" id="password"  v-model="password"/>
           </div>
           <div class="input-fied">
-            MOT DE PASSE OUBLIE ?
+         <router-link to="/passwordForget">   MOT DE PASSE OUBLIE ?</router-link>
           </div>
           <input type="submit" value="Se connecter" class="button solid" />
               <!-- LES LIENS POUR SE CONNECTER EN DEHORS DU FORMULAIRE -->
