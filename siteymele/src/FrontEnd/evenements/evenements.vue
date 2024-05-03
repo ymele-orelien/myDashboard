@@ -1,6 +1,6 @@
 <template>
-  <section id="team" class="team section-bg">
-    <div class="container" data-aos="fade-up">
+  <section id="team" class="team section-bg" >
+    <div class="container" data-aos="fade-up" v-if="event.length >0">
 
       <div class="section-title">
         <h2>Actualites sur les derniers evenements</h2>
@@ -56,6 +56,7 @@
         </router-link>
       </div>
     </div>
+    <div v-else></div>
   </section>
 </template>
 

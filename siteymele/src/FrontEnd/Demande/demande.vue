@@ -189,7 +189,7 @@ export default {
       } else if (this.demande.location.length < 6) {
         this.fieldErrors.location = "La localisation doit avoir au moins 6 caractères.";
         isValid = false;
-      } else if (/[*<>\/()]/.test(this.demande.location)) {
+      } else if (/[*<>()]/.test(this.demande.location)) {
         this.fieldErrors.location = "La localisation ne peut pas contenir les caractères spéciaux * < > / ( ).";
         isValid = false;
       }
@@ -202,7 +202,7 @@ export default {
 
       // Detail
       if (/[*<>\/()]/.test(this.demande.detail)) {
-        this.fieldErrors.detail = "La description ne peut pas contenir les caractères spéciaux * < > / ( ).";
+        this.fieldErrors.detail = "La description ne peut pas contenir les caractères spéciaux * < >  ( ).";
         isValid = false;
       }
 

@@ -231,7 +231,7 @@ export default {
             this.errorMessage = "Une erreur s'est produite lors de l'inscription.";
             this.$toast.warning("Une erreur s'est produite lors de l'inscription.");
           }
-        }) .finally(() => {
+        }).finally(() => {
           this.spinner = false; // Masquage du spinner
         });;
     },

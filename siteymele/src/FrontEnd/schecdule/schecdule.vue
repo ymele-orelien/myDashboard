@@ -14,7 +14,7 @@
                                     <h4>DON DE SANG</h4>
                                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur quibusdam
                                         voluptatum dolorem eum blanditiis aut?</p>
-                                    <a href="#">VOIR PLUS<i class="fa fa-long-arrow-right"></i></a>
+                                    <router-link to="donate">VOIR PLUS<i class="fa fa-long-arrow-right"></i></router-link>
                                 </div>
                             </div>
                         </div>
@@ -30,7 +30,7 @@
                                     <h4>DEMANDE EN POCHE</h4>
                                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis aspernatur
                                         placeat quisquam velit. Totam, laborum.</p>
-                                    <a href="#">VOIR PLUS<i class="fa fa-long-arrow-right"></i></a>
+                                    <router-link to="demnade">VOIR PLUS<i class="fa fa-long-arrow-right"></i></router-link>
                                 </div>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                                     <h4>EVENEMENT</h4>
                                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis aspernatur
                                         placeat quisquam velit. Totam, laborum.</p>
-                                    <a href="#">VOIR PLUS<i class="fa fa-long-arrow-right"></i></a>
+                                    <a href="event">VOIR PLUS<i class="fa fa-long-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>

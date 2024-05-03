@@ -62,8 +62,8 @@
                                        VOTRE DON </strong></p>
                               </div>
                               <div class="repons" style="margin: 0.5rem;" v-if="item.status === 'REFUSER'">
-                                 REPONSE: <strong style="color: red;"> CHERS DONATEUR(ICE) VOTRE DONATION A ETE REJETER
-                                    POUR :{{ item.motif }} </strong>
+                                 REPONSE: <strong > CHERS DONATEUR(ICE) VOTRE DONATION A ETE REJETER
+                                    POUR : <span style="color: red;">{{ item.motifs }} </span></strong>
                               </div>
                            </div>
 
@@ -122,7 +122,7 @@
                               </div>
                               <div class="repons" style="margin: 0.5rem;" v-if="item.status === 'REFUSER'">
                                  REPONSE: <strong style="color: red;">CHERS DEMANDEUR(SE) VOTRE DEMANDE A ETE REJETER
-                                    POUR :{{ item.motif }} </strong>
+                                    POUR :{{ item.motifs }} </strong>
                               </div>
                            </div>
 
